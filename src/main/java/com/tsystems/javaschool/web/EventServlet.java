@@ -15,7 +15,7 @@ public class EventServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("getAll");
-        request.setAttribute("events", PatientsUtil.getPatients());
-        request.getRequestDispatcher("/patients.jsp").forward(request, response);
+        //request.setAttribute("events", PatientsUtil.getPatients());
+        request.getRequestDispatcher("/events.jsp").forward(request, response);
     }
 }

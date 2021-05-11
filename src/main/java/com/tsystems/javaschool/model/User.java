@@ -1,35 +1,53 @@
 package com.tsystems.javaschool.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+import javax.persistence.*;
 import java.util.List;
 
-public class User {
+@Entity
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+public class User extends AbstractBaseEntity {
 
-    private String login;
+    @Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotBlank
+    private String email;
 
-    private String password;
-
+    @NotBlank
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "password", nullable = false)
+    @NotBlank
+    @Size(min = 5, max = 100)
+    private String password;
+
+    @NotBlank
+    @Column(name = "role", nullable = false)
     private Role role;
 
-    private List<Patient> patients; //protected?
+    @OneToMany
+    private List<Patient> patients;
 
     public User() {}
 
-    public User(String login, String password, String name, Role role, List<Patient> patients) {
-        this.login = login;
+    public User(String email, String password, String name, Role role, List<Patient> patients) {
+        this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
         this.patients = patients;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
