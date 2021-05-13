@@ -2,8 +2,7 @@ DROP TABLE IF EXISTS event_status;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS prescriptions;
 DROP TABLE IF EXISTS patients;
-DROP TABLE IF EXISTS prescriptionstype;
-DROP TABLE IF EXISTS meds;
+DROP TABLE IF EXISTS proc_or_meds;
 DROP TABLE IF EXISTS users;
 
 DROP SEQUENCE IF EXISTS global_seq;
@@ -33,18 +32,13 @@ CREATE TABLE patients
 
 
 
-CREATE TABLE meds
+CREATE TABLE proc_or_meds
 (
-    id      INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    name    VARCHAR NOT NULL
+    id   INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    name VARCHAR NOT NULL,
+    type VARCHAR NOT NULL
 );
 
-CREATE TABLE prescriptionstype
-(
-    meds_id INTEGER NOT NULL,
-    type    VARCHAR NOT NULL,
-    FOREIGN KEY (meds_id) REFERENCES meds (id)
-);
 
 CREATE TABLE prescriptions
 (
@@ -53,27 +47,27 @@ CREATE TABLE prescriptions
     time_period     VARCHAR NOT NULL,
     patient_id      INTEGER NOT NULL,
     dose            INTEGER,
-    meds_id         INTEGER NOT NULL,
+    proc_or_meds_id INTEGER NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE,
-    FOREIGN KEY (meds_id) references meds (id)
+    FOREIGN KEY (proc_or_meds_id) references proc_or_meds (id)
 );
 
 CREATE TABLE events
 (
-    id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    patient_id  INTEGER NOT NULL,
-    date_time   TIMESTAMP NOT NULL,
-    meds_id     INTEGER NOT NULL,
-    message     VARCHAR NOT NULL,
-    dose        INTEGER,
+    id              INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    patient_id      INTEGER   NOT NULL,
+    date_time       TIMESTAMP NOT NULL,
+    proc_or_meds_id INTEGER   NOT NULL,
+    message         VARCHAR   NOT NULL,
+    dose            INTEGER,
     FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE,
-    FOREIGN KEY (meds_id) REFERENCES meds (id)
+    FOREIGN KEY (proc_or_meds_id) REFERENCES proc_or_meds (id)
 );
 CREATE UNIQUE INDEX meals_unique_user_datetime_idx ON events (patient_id, date_time);
 
 CREATE TABLE event_status
 (
-    event_id        INTEGER NOT NULL,
-    status    VARCHAR NOT NULL,
+    event_id INTEGER NOT NULL,
+    status   VARCHAR NOT NULL,
     FOREIGN KEY (event_id) REFERENCES events (id)
 );

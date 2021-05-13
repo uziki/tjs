@@ -26,7 +26,7 @@ public class Prescription extends AbstractBaseEntity {
     private int timePeriod;
 
     @OneToOne (fetch = FetchType.EAGER)
-    @JoinColumn(name = "meds_id", nullable = false)
+    @JoinColumn(name = "proc_or_meds_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private ProcedureOrMedicine procedureOrMedicine;
@@ -95,6 +95,6 @@ public class Prescription extends AbstractBaseEntity {
     @Override
     public String toString() {
         return (dose == 0 ? getProcedureOrMedicine().getName() + " " + getTimePattern() :
-                getProcedureOrMedicine().getName() + " " + getDose() + " шт" + getTimePattern());
+                getProcedureOrMedicine().getName() + " " + getDose() + " шт " + getTimePattern());
     }
 }

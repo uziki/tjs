@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.DAO.Patient;
+package com.tsystems.javaschool.DAO;
 
 import com.tsystems.javaschool.model.Patient;
 
@@ -15,4 +15,5 @@ public interface PatientDAO {
     Patient get(int id);
 
     List<Patient> getAll();
+
 }

@@ -1,5 +1,6 @@
-package com.tsystems.javaschool.DAO.Patient;
+package com.tsystems.javaschool.DAO.JPA;
 
+import com.tsystems.javaschool.DAO.PatientDAO;
 import com.tsystems.javaschool.model.Patient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
-public class jpaDAO implements PatientDAO {
+public class JpaPatientDAO implements PatientDAO {
 
     @PersistenceContext
     private EntityManager em;

@@ -1,11 +1,12 @@
 package com.tsystems.javaschool.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "meds")
+@Table(name = "proc_or_meds")
 public class ProcedureOrMedicine extends AbstractBaseEntity{
 
     @NotBlank
@@ -13,8 +14,8 @@ public class ProcedureOrMedicine extends AbstractBaseEntity{
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "prescriptionstype", joinColumns = @JoinColumn(name = "meds_id"))
     @Column(name = "type")
+    @NotNull
     private PrescriptionType prescriptionType;
 
     public ProcedureOrMedicine() {}

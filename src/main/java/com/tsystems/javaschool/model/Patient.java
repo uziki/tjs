@@ -28,7 +28,7 @@ public class Patient extends AbstractBaseEntity {
     @Column(name = "insurance", nullable = false)
     private String insuranceNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
     private User doctor;
@@ -36,23 +36,21 @@ public class Patient extends AbstractBaseEntity {
     @Column(name = "ill", nullable = false, columnDefinition = "bool default true")
     private boolean isIll = true;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Prescription> prescriptions;
 
 
     public Patient() {
     }
 
-    public Patient(String name, String diagnosis, String insuranceNumber, boolean isIll) {
-        this(null, name, diagnosis, insuranceNumber, isIll);
-    }
 
-    public Patient(Integer id, String name, String diagnosis, String insuranceNumber, boolean isIll) {
+    public Patient(Integer id, String name, String diagnosis, String insuranceNumber, boolean isIll, User doctor) {
         super(id);
         this.name = name;
         this.diagnosis = diagnosis;
         this.insuranceNumber = insuranceNumber;
         this.isIll = isIll;
+        this.doctor = doctor;
     }
 
     public List<Prescription> getPrescriptions() {

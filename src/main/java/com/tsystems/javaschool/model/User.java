@@ -27,19 +27,19 @@ public class User extends AbstractBaseEntity {
 
     @NotBlank
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
     private List<Patient> patients;
 
     public User() {}
 
-    public User(String email, String password, String name, Role role, List<Patient> patients) {
+    public User(String email, String password, String name, Role role) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
-        this.patients = patients;
     }
 
     public String getEmail() {

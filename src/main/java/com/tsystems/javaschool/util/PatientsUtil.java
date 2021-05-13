@@ -7,15 +7,15 @@ import java.util.List;
 
 public class PatientsUtil {
 
-    /*public static final List<Patient> patients = Arrays.asList(
-            new Patient("Иванов Иван", "Перелом пупка", "1111", true),
-            new Patient("Петров Петр", "Вывих глаза", "2222", true),
-            new Patient("Сидоров Сидр", "Не жилец", "3333", true)
+    /*public static final List<patient> patients = Arrays.asList(
+            new patient("Иванов Иван", "Перелом пупка", "1111", true),
+            new patient("Петров Петр", "Вывих глаза", "2222", true),
+            new patient("Сидоров Сидр", "Не жилец", "3333", true)
     );*/
 
 
 
-    public static final List<Patient> patients = getPatients();
+    /*public static final List<Patient> patients = getPatients();
 
     public static List<Patient> getPatients() {
         ProcedureOrMedicine pom3 = new ProcedureOrMedicine("Аспирин", PrescriptionType.TYPE_MEDICINE);
@@ -35,5 +35,5 @@ public class PatientsUtil {
         patient3.setPrescriptions(Arrays.asList(ps3, ps1));
 
         return Arrays.asList(patient1, patient2, patient3);
-    }
+    }*/
 }

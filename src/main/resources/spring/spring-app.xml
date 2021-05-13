@@ -7,6 +7,4 @@
 
     <context:component-scan base-package="com.tsystems.**.service"/>
 
-    <context:component-scan base-package="com.tsystems.**.web"/>
-
 </beans>
