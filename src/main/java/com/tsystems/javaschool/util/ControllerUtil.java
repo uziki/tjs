@@ -8,4 +8,9 @@ public class ControllerUtil {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
     }
+
+    public static String getType(HttpServletRequest request) {
+        String type = Objects.requireNonNull(request.getParameter("type"));
+        return type;
+    }
 }

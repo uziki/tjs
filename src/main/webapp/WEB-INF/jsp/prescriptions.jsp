@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <head>
@@ -13,8 +13,10 @@
     <hr/>
     <h2>Назначения</h2>
     <h1>${patient.name} - ${patient.diagnosis}</h1>
-    <a href="patients/prescriptions/create">Новое назначение</a>
+    <a href="patients/prescriptions/create?type=medicine">Новое лекарство</a> <a href="patients/prescriptions/create?type=procedure">Новая процедура</a>
+
     <table border="1" cellpadding="8" cellspacing="0">
+
         <thead>
         <tr>
             <th>Назначение</th>

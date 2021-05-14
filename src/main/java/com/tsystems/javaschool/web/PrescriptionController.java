@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
+import static com.tsystems.javaschool.util.ControllerUtil.getType;
 
 
 @Controller
@@ -27,9 +28,15 @@ public class PrescriptionController {
     }
 
     @GetMapping("/create")
-    public String create(Model model) {
+    public String create(HttpServletRequest request, Model model) {
+        String type = getType(request);
         model.addAttribute("prescription", new Prescription());
-        return "prescriptionForm";
+        if (type.equals("medicine")) {
+            return "medicineForm";
+        } else if (type.equals("procedure")){
+            return "prescriptionForm";
+        }
+        return "prescriptions";
     }
 
     @GetMapping("/update")
