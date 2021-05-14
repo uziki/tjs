@@ -26,8 +26,9 @@ VALUES ('Аспирин', 'TYPE_MEDICINE'),
        ('Зарядка', 'TYPE_PROCEDURE'),
        ('Массаж', 'TYPE_PROCEDURE');
 
-INSERT INTO prescriptions (time_pattern, time_period, dose, patient_id, proc_or_meds_id)
-VALUES ('утром и вечером', '5', 2, 4, 7),
-       ('по четвергам и пятницам', '2', 0, 5, 8),
-       ('по четвергам и пятницам', '2', 0, 6, 8),
-       ('по понедельникам и воскресеньям', '3', 0, 6, 9);
+INSERT INTO prescriptions (time_pattern, time_period, dose, patient_id, proc_or_meds_id, user_id)
+VALUES ('утром и вечером', '5', 2, 4, 7, 1),
+       ('по четвергам и пятницам', '2', 0, 5, 8, 1),
+       ('по четвергам и пятницам', '2', 0, 6, 8, 1),
+       ('по понедельникам и воскресеньям', '3', 0, 6, 9, 3);
+

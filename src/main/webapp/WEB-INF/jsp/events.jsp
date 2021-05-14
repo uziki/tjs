@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Список событий</title>
 </head>

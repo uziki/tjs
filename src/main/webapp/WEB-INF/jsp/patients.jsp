@@ -3,12 +3,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Список пациентов</title>
 </head>
 <body>
 <section>
-    <h3><a href="index.jsp">На главную</a></h3>
+    <h3><a href="${pageContext.request.contextPath}">На главную</a></h3>
     <hr/>
     <h2>Пациенты</h2>
     <a href="patients/create">Новый пациент</a>
@@ -27,12 +28,12 @@
         <c:forEach items="${patients}" var="patient">
             <jsp:useBean id="patient" type="com.tsystems.javaschool.model.Patient"/>
             <tr>
-                <td>${patient.name}</td>
+                <td><a href="patients/update?id=${patient.id}">${patient.name}</a></td>
                 <td>${patient.diagnosis}</td>
                 <td>${patient.doctorName}</td>
                 <td>${patient.prescriptions}</td>
                 <td>+</td>
-                <td><a href="patients/update?id=${patient.id}">Изменить</a></td>
+                <td><a href="patients/prescriptions?id=${patient.id}">Изменить</a></td>
                 <td><a href="patients/delete?id=${patient.id}">Выписать</a></td>
             </tr>
         </c:forEach>

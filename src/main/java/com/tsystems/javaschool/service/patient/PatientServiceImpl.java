@@ -5,10 +5,12 @@ import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.util.Exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class PatientServiceImpl implements PatientService {
 
     private final PatientDAO dao;
@@ -23,9 +25,15 @@ public class PatientServiceImpl implements PatientService {
         return dao.get(id);
     }
 
+    //TODO добавить сюда сервис назначений, удалить оттуда назначения человека
     @Override
+    @Transactional
     public void delete(int id) throws NotFoundException {
-        dao .delete(id);
+        Patient patient = dao.get(id);
+        patient.setIll(false);
+        patient.setPrescriptions(null);
+        patient.setDiagnosis("Здоров");
+        update(patient, patient.getDoctor().getId());
     }
 
     @Override
@@ -34,12 +42,14 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void update(Patient patient) throws NotFoundException {
-        dao.save(patient);
+    @Transactional
+    public void update(Patient patient, int userId) throws NotFoundException {
+        dao.save(patient, userId);
     }
 
     @Override
-    public Patient create(Patient patient) {
-        return dao.save(patient);
+    @Transactional
+    public Patient create(Patient patient, int userId) {
+        return dao.save(patient, userId);
     }
 }

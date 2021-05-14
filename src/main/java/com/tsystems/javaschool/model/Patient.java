@@ -8,14 +8,14 @@ import java.util.List;
 
 @NamedQueries({
         @NamedQuery(name = Patient.DELETE, query = "DELETE FROM Patient p WHERE p.id=:id"),
-        @NamedQuery(name = Patient.ALL_SORTED, query = "SELECT p FROM Patient p ORDER BY p.name"),
+        @NamedQuery(name = Patient.ALL_SORTED, query = "SELECT p FROM Patient p ORDER BY p.name")
 })
 @Entity
 @Table(name = "patients")
 public class Patient extends AbstractBaseEntity {
 
-    public static final String DELETE = "User.delete";
-    public static final String ALL_SORTED = "User.getAllSorted";
+    public static final String DELETE = "Patient.delete";
+    public static final String ALL_SORTED = "Patient.getAllSorted";
 
     @NotBlank
     @Column(name = "name", nullable = false)
@@ -34,7 +34,7 @@ public class Patient extends AbstractBaseEntity {
     private User doctor;
 
     @Column(name = "ill", nullable = false, columnDefinition = "bool default true")
-    private boolean isIll = true;
+    private boolean ill = true;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Prescription> prescriptions;
@@ -43,13 +43,19 @@ public class Patient extends AbstractBaseEntity {
     public Patient() {
     }
 
+    public Patient(String name, String diagnosis, String insuranceNumber, boolean ill) {
+        this(null, name, diagnosis, insuranceNumber, ill, null);
+    }
+    public Patient(String name, String diagnosis, String insuranceNumber, boolean ill, User doctor) {
+        this(null, name, diagnosis, insuranceNumber, ill, doctor);
+    }
 
-    public Patient(Integer id, String name, String diagnosis, String insuranceNumber, boolean isIll, User doctor) {
+    public Patient(Integer id, String name, String diagnosis, String insuranceNumber, boolean ill, User doctor) {
         super(id);
         this.name = name;
         this.diagnosis = diagnosis;
         this.insuranceNumber = insuranceNumber;
-        this.isIll = isIll;
+        this.ill = ill;
         this.doctor = doctor;
     }
 
@@ -94,11 +100,11 @@ public class Patient extends AbstractBaseEntity {
     }
 
     public boolean isIll() {
-        return isIll;
+        return ill;
     }
 
     public void setIll(boolean ill) {
-        isIll = ill;
+        this.ill = ill;
     }
 
     public String getDoctorName() {

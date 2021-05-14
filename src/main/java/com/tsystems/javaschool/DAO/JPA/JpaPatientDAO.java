@@ -2,23 +2,22 @@ package com.tsystems.javaschool.DAO.JPA;
 
 import com.tsystems.javaschool.DAO.PatientDAO;
 import com.tsystems.javaschool.model.Patient;
+import com.tsystems.javaschool.model.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly = true)
 public class JpaPatientDAO implements PatientDAO {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    @Transactional
-    public Patient save(Patient patient) {
+    public Patient save(Patient patient, int userId ) {
+        patient.setDoctor(em.getReference(User.class, userId));
         if (patient.isNew()) {
             em.persist(patient);
             return patient;
@@ -32,17 +31,13 @@ public class JpaPatientDAO implements PatientDAO {
         return em.find(Patient.class, id);
     }
 
-    @Override
-    @Transactional
+    /*@Override
     public boolean delete(int id) {
 
-/*      User ref = em.getReference(User.class, id);
-        em.remove(ref);
-*/
         return em.createNamedQuery(Patient.DELETE)
                 .setParameter("id", id)
                 .executeUpdate() != 0;
-    }
+    }*/
 
 
     @Override

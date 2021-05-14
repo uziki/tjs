@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
+
+import static com.tsystems.javaschool.util.ControllerUtil.getId;
+import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
+import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
 
 @Controller
 @RequestMapping("/patients")
@@ -34,22 +39,43 @@ public class PatientController {
         return "redirect:/patients";
     }
 
-
-
-    /*@GetMapping("/events")
-    public String getEvents(Model model) {
-        model.addAttribute("events", dao.getAll());
-        return "events";
-    }*/
-
-    /*@PostMapping("/users")
-    public String setUser(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        SecurityUtil.setAuthUserId(userId);
-        return "redirect:meals";*/
-
-    private int getId(HttpServletRequest request) {
-        String paramId = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.parseInt(paramId);
+    @GetMapping("/create")
+    public String create(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "patientForm";
     }
+
+    @GetMapping("/update")
+    public String update(HttpServletRequest request, Model model) {
+        int userId = SecurityUtil.authUserId();
+        log.info("get meal {} for user {}", getId(request), userId);
+        Patient patient = service.get(getId(request));
+        model.addAttribute("patient", patient);
+        return "patientForm";
+    }
+
+    @PostMapping
+    public String updateOrCreate(HttpServletRequest request) {
+        int userId = SecurityUtil.authUserId();
+        Patient patient = new Patient(request.getParameter("name"),
+                request.getParameter("diagnosis"),
+                request.getParameter("insurance"),
+                Boolean.parseBoolean(request.getParameter("isill")));
+
+        if (request.getParameter("id").isEmpty()) {
+            patient.setIll(true);
+            log.info("create {} for user {}", patient, userId);
+            checkNew(patient);
+            service.create(patient, userId);
+        } else {
+            log.info("update {} for user {}", patient, userId);
+            assureIdConsistent(patient, getId(request));
+            service.update(patient, userId);
+        }
+        return "redirect:/patients";
+    }
+
+
+
+
 }

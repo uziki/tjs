@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="ru">
+<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <meta charset="UTF-8">
     <title>Больница</title>

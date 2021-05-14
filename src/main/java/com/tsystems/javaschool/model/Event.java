@@ -25,12 +25,12 @@ public class Event extends AbstractBaseEntity {
     private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "event_status", joinColumns = @JoinColumn(name = "event_id"))
     @Column(name = "status")
+    @NotNull
     private EventStatus eventStatus;
 
     @OneToOne
-    @JoinColumn(name = "meds_id", nullable = false)
+    @JoinColumn(name = "proc_or_meds_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private ProcedureOrMedicine procedureOrMedicine;
@@ -40,8 +40,13 @@ public class Event extends AbstractBaseEntity {
     private String message;
 
     @Column(name = "dose", nullable = false)
-    @NotNull
     private int dose;
+
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "prescription_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    private Prescription prescription;
 
     public Event() {}
 
@@ -51,5 +56,61 @@ public class Event extends AbstractBaseEntity {
         this.eventStatus = EventStatus.PLANNED;
         this.procedureOrMedicine = new ProcedureOrMedicine(procedureOrMedicineName, type);
         this.dose = dose;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public EventStatus getEventStatus() {
+        return eventStatus;
+    }
+
+    public void setEventStatus(EventStatus eventStatus) {
+        this.eventStatus = eventStatus;
+    }
+
+    public ProcedureOrMedicine getProcedureOrMedicine() {
+        return procedureOrMedicine;
+    }
+
+    public void setProcedureOrMedicine(ProcedureOrMedicine procedureOrMedicine) {
+        this.procedureOrMedicine = procedureOrMedicine;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getDose() {
+        return dose;
+    }
+
+    public void setDose(int dose) {
+        this.dose = dose;
+    }
+
+    public Prescription getPrescription() {
+        return prescription;
+    }
+
+    public void setPrescription(Prescription prescription) {
+        this.prescription = prescription;
     }
 }

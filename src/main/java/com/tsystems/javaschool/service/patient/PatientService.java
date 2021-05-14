@@ -12,7 +12,7 @@ public interface PatientService {
 
     List<Patient> getAll();
 
-    void update(Patient patient) throws NotFoundException;
+    void update(Patient patient, int userId) throws NotFoundException;
 
-    Patient create(Patient patient);
+    Patient create(Patient patient, int userId);
 }

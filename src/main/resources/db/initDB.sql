@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS event_status;
 DROP TABLE IF EXISTS events;
 DROP TABLE IF EXISTS prescriptions;
 DROP TABLE IF EXISTS patients;
@@ -46,10 +45,13 @@ CREATE TABLE prescriptions
     time_pattern    VARCHAR NOT NULL,
     time_period     VARCHAR NOT NULL,
     patient_id      INTEGER NOT NULL,
+    user_id         INTEGER NOT NULL,
     dose            INTEGER,
     proc_or_meds_id INTEGER NOT NULL,
+    active          BOOLEAN DEFAULT TRUE NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE,
-    FOREIGN KEY (proc_or_meds_id) references proc_or_meds (id)
+    FOREIGN KEY (proc_or_meds_id) references proc_or_meds (id),
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE events
@@ -58,16 +60,13 @@ CREATE TABLE events
     patient_id      INTEGER   NOT NULL,
     date_time       TIMESTAMP NOT NULL,
     proc_or_meds_id INTEGER   NOT NULL,
+    prescription_id INTEGER   NOT NULL,
     message         VARCHAR   NOT NULL,
     dose            INTEGER,
+    status          VARCHAR NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE,
+    FOREIGN KEY (prescription_id) REFERENCES prescriptions (id) ON DELETE CASCADE,
     FOREIGN KEY (proc_or_meds_id) REFERENCES proc_or_meds (id)
 );
 CREATE UNIQUE INDEX meals_unique_user_datetime_idx ON events (patient_id, date_time);
 
-CREATE TABLE event_status
-(
-    event_id INTEGER NOT NULL,
-    status   VARCHAR NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES events (id)
-);
