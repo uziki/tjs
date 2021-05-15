@@ -11,6 +11,8 @@ public interface PrescriptionDAO {
 
     Prescription get(int id);
 
+    Prescription getWithId(int id, int patiendId);
+
     List<Prescription> getAll();
 
     List<Prescription> getAllWithId(int patientId);

@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.dao.jpa;
 
 import com.tsystems.javaschool.dao.ProcedureOrMedicineDAO;
+import com.tsystems.javaschool.model.PrescriptionType;
 import com.tsystems.javaschool.model.ProcedureOrMedicine;
 import org.springframework.stereotype.Repository;
 
@@ -35,9 +36,10 @@ public class JpaProcedureOrMedicineDAO implements ProcedureOrMedicineDAO {
     }
 
     @Override
-    public ProcedureOrMedicine getByName(String name) {
-        return em.createNamedQuery(ProcedureOrMedicine.BY_NAME, ProcedureOrMedicine.class)
+    public ProcedureOrMedicine getByNameAndType(String name, String type) {
+        return em.createNamedQuery(ProcedureOrMedicine.BY_NAME_AND_TYPE, ProcedureOrMedicine.class)
                 .setParameter("name", name)
+                .setParameter("type", PrescriptionType.valueOf(type))
                 .getSingleResult();
 
     }

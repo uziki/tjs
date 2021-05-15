@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @NamedQueries({
         @NamedQuery(name = ProcedureOrMedicine.ALL, query = "SELECT p FROM ProcedureOrMedicine p"),
-        @NamedQuery(name = ProcedureOrMedicine.BY_NAME, query = "SELECT p FROM ProcedureOrMedicine p WHERE p.name=:name"),
+        @NamedQuery(name = ProcedureOrMedicine.BY_NAME_AND_TYPE, query = "SELECT p FROM ProcedureOrMedicine p WHERE p.name=:name AND p.prescriptionType=:type"),
         @NamedQuery(name = ProcedureOrMedicine.DELETE, query = "DELETE FROM ProcedureOrMedicine p WHERE p.id=:id")
 })
 
@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ProcedureOrMedicine extends AbstractBaseEntity{
 
     public static final String ALL = "ProcedureOrMedicine.getAll";
-    public static final String BY_NAME = "ProcedureOrMedicine.getByName";
+    public static final String BY_NAME_AND_TYPE = "ProcedureOrMedicine.getByNameAndType";
     public static final String DELETE = "ProcedureOrMedicine.delete";
 
     @NotBlank

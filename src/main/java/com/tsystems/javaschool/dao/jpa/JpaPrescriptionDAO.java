@@ -35,6 +35,14 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
     }
 
     @Override
+    public Prescription getWithId(int id, int patiendId) {
+        return em.createNamedQuery(Prescription.GET_WITH_ID, Prescription.class)
+                .setParameter("id", id)
+                .setParameter("patientId", patiendId)
+                .getSingleResult();
+    }
+
+    @Override
     public boolean delete(int id) {
 
         return em.createNamedQuery(Prescription.DELETE)

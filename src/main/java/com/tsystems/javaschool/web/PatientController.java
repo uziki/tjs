@@ -2,6 +2,7 @@ package com.tsystems.javaschool.web;
 
 
 import com.tsystems.javaschool.model.Patient;
+import com.tsystems.javaschool.service.PrescriptionEventFacade;
 import com.tsystems.javaschool.service.patient.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,18 +24,29 @@ import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
 public class PatientController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private PatientService service;
+    private PrescriptionEventFacade facadeService;
 
     @Autowired
-    public PatientController(PatientService service) {
+    public PatientController(PatientService service, PrescriptionEventFacade facadeService) {
         this.service = service;
+        this.facadeService = facadeService;
     }
+
+    /*@GetMapping("/delete")
+    public String delete(HttpServletRequest request) {
+        int doctorId = SecurityUtil.authUserId();
+        int patientId = getId(request);
+        log.info("delete patient {} for user {}", patientId, doctorId);
+        service.delete(patientId);
+        return "redirect:/patients";
+    }*/
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         int doctorId = SecurityUtil.authUserId();
         int patientId = getId(request);
         log.info("delete patient {} for user {}", patientId, doctorId);
-        service.delete(patientId);
+        facadeService.deletePatient(patientId);
         return "redirect:/patients";
     }
 

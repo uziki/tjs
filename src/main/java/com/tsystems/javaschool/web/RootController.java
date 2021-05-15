@@ -3,18 +3,20 @@ package com.tsystems.javaschool.web;
 import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.service.patient.PatientService;
 import com.tsystems.javaschool.service.prescription.PrescriptionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
 
 @Controller
 public class RootController {
+    private final Logger log = LoggerFactory.getLogger(getClass());
     private PatientService patientService;
     private PrescriptionService prescriptionService;
 

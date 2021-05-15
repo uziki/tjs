@@ -27,6 +27,10 @@ public class PrescriptionServiceImpl implements PrescriptionService{
         return checkNotFoundWithId(dao.get(id), id);
     }
 
+    @Override
+    public Prescription getWithId(int id, int patientId) throws NotFoundException {
+        return checkNotFoundWithId(dao.getWithId(id, patientId), id);
+    }
 
     //TODO реализовать отмену событий
     @Override

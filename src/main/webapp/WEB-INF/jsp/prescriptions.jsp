@@ -32,7 +32,7 @@
                 <td>${prescription.doctor.name}</td>
                 <c:if test="${prescription.active}">
                 <td><a href="patients/prescriptions/update?id=${prescription.id}">Изменить</a></td>
-                <td><a href="patients/prescriptions/delete?id=${prescription.id}">Отменить</a></td>
+                <td><a href="patients/prescriptions/delete?id=${prescription.id}&patientid=${patient.id}">Отменить</a></td>
                 </c:if>
                 <c:if test="${prescription.active == false}">
                     <td colspan="2" align="center">Отменено</td>

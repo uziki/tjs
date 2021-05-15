@@ -13,5 +13,5 @@ public interface ProcedureOrMedicineDAO {
 
     List<ProcedureOrMedicine> getAll();
 
-    ProcedureOrMedicine getByName(String name);
+    ProcedureOrMedicine getByNameAndType(String name, String type);
 }

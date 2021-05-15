@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -43,7 +44,7 @@ public class PrescriptionController {
         if (type.equals("medicine")) {
             return "medicineForm";
         } else if (type.equals("procedure")){
-            return "prescriptionForm";
+            return "procedureForm";
         }
         return "prescriptions";
     }
@@ -57,15 +58,15 @@ public class PrescriptionController {
         if (prescription.getProcedureOrMedicine().getPrescriptionType() == PrescriptionType.TYPE_MEDICINE) {
             return "medicineForm";
         } else
-            return "prescriptionForm";
+            return "procedureForm";
     }
 
     @PostMapping
-    public String updateOrCreate(HttpServletRequest request) {
+    public String updateOrCreate(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         int doctorId = SecurityUtil.authUserId();
         int patientId = Integer.parseInt(request.getParameter("patientid"));
-        int dose = Integer.parseInt(request.getParameter("dose"));
         int timePeriod = Integer.parseInt(request.getParameter("timeperiod"));
+        int dose = Integer.parseInt(request.getParameter("dose"));
         String pomName = request.getParameter("name");
         String pomType = request.getParameter("type");
         String timePattern = "1:" + request.getParameter("morning")
@@ -85,8 +86,17 @@ public class PrescriptionController {
             assureIdConsistent(prescription, getId(request));
             facadeService.updatePrescription(prescription, patientId, doctorId, pomName, pomType);
         }
-        return "redirect:/patients";
+        redirectAttributes.addAttribute("id", patientId);
+        return "redirect:/patients/prescriptions";
     }
 
-
+    @GetMapping("/delete")
+    public String delete(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        int id = getId(request);
+        int patientId = Integer.parseInt(request.getParameter("patientid"));
+        log.info("delete prescription {} for patient {}", id, patientId);
+        facadeService.deletePrescription(id, patientId);
+        redirectAttributes.addAttribute("id", patientId);
+        return "redirect:/patients/prescriptions";
+    }
 }
