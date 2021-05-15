@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 @Transactional
 public class PatientServiceImpl implements PatientService {
@@ -22,14 +24,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient get(int id) throws NotFoundException {
-        return dao.get(id);
+        return checkNotFoundWithId(dao.get(id), id);
     }
 
     //TODO добавить сюда сервис назначений, удалить оттуда назначения человека
     @Override
     @Transactional
     public void delete(int id) throws NotFoundException {
-        Patient patient = dao.get(id);
+        Patient patient = get(id);
         patient.setIll(false);
         patient.setPrescriptions(null);
         patient.setDiagnosis("Здоров");
@@ -44,7 +46,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public void update(Patient patient, int doctorId) throws NotFoundException {
-        dao.save(patient, doctorId);
+        checkNotFoundWithId(dao.save(patient, doctorId), patient.getId());
     }
 
     @Override

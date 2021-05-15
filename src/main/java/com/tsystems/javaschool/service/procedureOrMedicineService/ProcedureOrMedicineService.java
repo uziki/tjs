@@ -6,8 +6,7 @@ import com.tsystems.javaschool.util.exception.NotFoundException;
 import java.util.List;
 
 public interface ProcedureOrMedicineService {
-
-    boolean delete(int id) throws NotFoundException;
+    void delete(int id) throws NotFoundException;
 
     ProcedureOrMedicine get(int id) throws NotFoundException;
 

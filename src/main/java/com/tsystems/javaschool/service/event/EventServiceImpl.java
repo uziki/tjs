@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 @Transactional
 public class EventServiceImpl implements EventService {
@@ -22,12 +24,12 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event get(int id) throws NotFoundException {
-        return dao.get(id);
+        return checkNotFoundWithId(dao.get(id), id);
     }
 
     @Override
     public void delete(int id) throws NotFoundException {
-        dao.delete(id);
+        checkNotFoundWithId(dao.delete(id), id);
     }
 
     @Override
@@ -37,7 +39,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void update(Event event) throws NotFoundException {
-        dao.save(event);
+        checkNotFoundWithId(dao.save(event), event.getId());
     }
 
     @Override

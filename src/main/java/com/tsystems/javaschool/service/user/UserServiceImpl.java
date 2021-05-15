@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -21,12 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User get(int id) throws NotFoundException {
-        return dao.get(id);
+        return checkNotFoundWithId(dao.get(id), id);
     }
 
     @Override
     public void delete(int id) throws NotFoundException {
-        dao.delete(id);
+        checkNotFoundWithId(dao.delete(id), id);
     }
 
     @Override
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) throws NotFoundException {
-        dao.save(user);
+        checkNotFoundWithId(dao.save(user), user.getId());
     }
 
     @Override

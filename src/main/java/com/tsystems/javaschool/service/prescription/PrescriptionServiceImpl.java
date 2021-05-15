@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 @Transactional
 public class PrescriptionServiceImpl implements PrescriptionService{
@@ -22,7 +24,7 @@ public class PrescriptionServiceImpl implements PrescriptionService{
 
     @Override
     public Prescription get(int id) throws NotFoundException {
-        return dao.get(id);
+        return checkNotFoundWithId(dao.get(id), id);
     }
 
 
@@ -30,7 +32,7 @@ public class PrescriptionServiceImpl implements PrescriptionService{
     @Override
     @Transactional
     public void delete(int id) throws NotFoundException {
-        Prescription prescription = dao.get(id);
+        Prescription prescription = get(id);
         prescription.setActive(false);
     }
 
@@ -47,7 +49,7 @@ public class PrescriptionServiceImpl implements PrescriptionService{
     @Override
     @Transactional
     public void update(Prescription prescription) throws NotFoundException {
-        dao.save(prescription);
+        checkNotFoundWithId(dao.save(prescription), prescription.getId());
     }
 
     @Override
