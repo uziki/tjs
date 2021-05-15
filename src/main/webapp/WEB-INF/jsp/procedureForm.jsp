@@ -21,31 +21,31 @@
         </dl>
         <dl>
             <dt>Понедельник:</dt>
-            <dd><input type="time" name="monday"></dd>
+            <dd><input type="time" value="${day0}" name="monday"></dd>
         </dl>
         <dl>
             <dt>Вторник:</dt>
-            <dd><input type="time" name="tuesday"></dd>
+            <dd><input type="time" value="${day1}" name="tuesday"></dd>
         </dl>
         <dl>
             <dt>Среда:</dt>
-            <dd><input type="time" name="wednesday"></dd>
+            <dd><input type="time" value="${day2}" name="wednesday"></dd>
         </dl>
         <dl>
             <dt>Четверг:</dt>
-            <dd><input type="time" name="thursday"></dd>
+            <dd><input type="time" value="${day3}" name="thursday"></dd>
         </dl>
         <dl>
             <dt>Пятница:</dt>
-            <dd><input type="time" name="friday"></dd>
+            <dd><input type="time" value="${day4}" name="friday"></dd>
         </dl>
         <dl>
             <dt>Суббота:</dt>
-            <dd><input type="time" name="saturday"></dd>
+            <dd><input type="time" value="${day5}" name="saturday"></dd>
         </dl>
         <dl>
             <dt>Воскресенье:</dt>
-            <dd><input type="time" name="sunday"></dd>
+            <dd><input type="time" value="${day6}" name="sunday"></dd>
         </dl>
         <dl>
             <dt>Курс (кол-во недель):</dt>

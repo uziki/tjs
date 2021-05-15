@@ -8,10 +8,12 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.List;
 
+import static com.tsystems.javaschool.util.PrescriptionUtil.DAYS;
+
 @NamedQueries({
         @NamedQuery(name = Prescription.DELETE, query = "DELETE FROM Prescription p WHERE p.id=:id"),
         @NamedQuery(name = Prescription.ALL_WITH_ID, query = "SELECT p FROM Prescription p " +
-                "WHERE p.patient.id=:patientId ORDER BY p.active"),
+                "WHERE p.patient.id=:patientId ORDER BY p.active DESC"),
         @NamedQuery(name = Prescription.ALL, query = "SELECT p FROM Prescription p ORDER BY p.active"),
         @NamedQuery(name = Prescription.GET_WITH_ID, query = "SELECT p FROM Prescription p " +
                 "WHERE p.id=:id AND p.patient.id=:patientId")
@@ -25,7 +27,7 @@ public class Prescription extends AbstractBaseEntity {
     public static final String ALL = "Prescription.getAll";
     public static final String GET_WITH_ID = "Prescription.getWithId";
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
@@ -44,7 +46,7 @@ public class Prescription extends AbstractBaseEntity {
     @NotNull
     private int timePeriod;
 
-    @OneToOne (fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "proc_or_meds_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
@@ -59,7 +61,8 @@ public class Prescription extends AbstractBaseEntity {
     @Column(name = "active", nullable = false, columnDefinition = "bool default true")
     private boolean active;
 
-    public Prescription() {}
+    public Prescription() {
+    }
 
     public Prescription(Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine) {
         this.patient = patient;
@@ -147,10 +150,41 @@ public class Prescription extends AbstractBaseEntity {
         if (isNew()) {
             return "";
         } else {
-            return (dose == 0 ? getProcedureOrMedicine().getName() + " " + getTimePattern()
-                    + ", повторить " + getTimePeriod() + " раз(а)" :
-                    getProcedureOrMedicine().getName() + " " + getDose() + " шт " + getTimePattern()
-                            + ", повторить " + getTimePeriod() + " раз(а)");
+            return (dose == 0 ? procedureToString() : medicineToString());
         }
+    }
+
+    private String medicineToString() {
+        String[] times = timePattern.split(" ");
+        int count;
+        if (timePattern.length() > 18) {
+            count = 3;
+        } else if (timePattern.length() > 13) {
+            count = 2;
+        } else if (timePattern.length() > 8) {
+            count = 1;
+        } else {
+            count = 0;
+        }
+        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " " + getDose() + " шт " + count + " раз(а) в день, в ");
+        for (int i = 0; i < 3; i++) {
+            if (times[i].length() > 2) {
+                sb.append(times[i].substring(2)).append(", ");
+            }
+        }
+        sb.append("курс " + getTimePeriod() + " дней(дня)");
+        return sb.toString();
+    }
+
+    private String procedureToString() {
+        String[] days = timePattern.split(" ");
+        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " по следующим дням: ");
+        for (int i = 0; i < 7; i++) {
+            if (days[i].length() > 2) {
+                sb.append(DAYS.get(i) + " " + days[i].substring(2) + ", ");
+            }
+        }
+        sb.append("курс (недель): " + getTimePeriod());
+        return sb.toString();
     }
 }

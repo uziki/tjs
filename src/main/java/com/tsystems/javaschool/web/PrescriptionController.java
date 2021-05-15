@@ -17,8 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.tsystems.javaschool.util.ControllerUtil.getId;
-import static com.tsystems.javaschool.util.ControllerUtil.getType;
+import static com.tsystems.javaschool.util.ControllerUtil.*;
 import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
 import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
 
@@ -55,6 +54,7 @@ public class PrescriptionController {
         Prescription prescription = prescriptionService.get(getId(request));
         model.addAttribute("prescription", prescription);
         model.addAttribute("patientId", prescription.getPatient().id());
+        addTimePatternToModel(prescription, model);
         if (prescription.getProcedureOrMedicine().getPrescriptionType() == PrescriptionType.TYPE_MEDICINE) {
             return "medicineForm";
         } else
@@ -69,9 +69,7 @@ public class PrescriptionController {
         int dose = Integer.parseInt(request.getParameter("dose"));
         String pomName = request.getParameter("name");
         String pomType = request.getParameter("type");
-        String timePattern = "1:" + request.getParameter("morning")
-                + " 2:" + request.getParameter("afternoon")
-                + " 3:" + request.getParameter("evening");
+        String timePattern = timePatternFromRequest(request);
         Prescription prescription = new Prescription();
         prescription.setDose(dose);
         prescription.setTimePeriod(timePeriod);

@@ -20,15 +20,15 @@
         </dl>
         <dl>
             <dt>Утром:</dt>
-            <dd><input type="time" name="morning"></dd>
+            <dd><input type="time" value="${time0}" name="morning"></dd>
         </dl>
         <dl>
             <dt>Днем:</dt>
-            <dd><input type="time" name="afternoon"></dd>
+            <dd><input type="time" value="${time1}" name="afternoon"></dd>
         </dl>
         <dl>
             <dt>Вечером:</dt>
-            <dd><input type="time" name="evening"></dd>
+            <dd><input type="time" value="${time2}" name="evening"></dd>
         </dl>
         <dl>
             <dt>Доза:</dt>
