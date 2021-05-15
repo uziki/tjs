@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
 import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
@@ -32,9 +31,9 @@ public class PatientController {
 
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
-        int userId = SecurityUtil.authUserId();
+        int doctorId = SecurityUtil.authUserId();
         int patientId = getId(request);
-        log.info("delete patient {} for user {}", patientId, userId);
+        log.info("delete patient {} for user {}", patientId, doctorId);
         service.delete(patientId);
         return "redirect:/patients";
     }
@@ -47,8 +46,8 @@ public class PatientController {
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        int userId = SecurityUtil.authUserId();
-        log.info("get meal {} for user {}", getId(request), userId);
+        int doctorId = SecurityUtil.authUserId();
+        log.info("get meal {} for user {}", getId(request), doctorId);
         Patient patient = service.get(getId(request));
         model.addAttribute("patient", patient);
         return "patientForm";
@@ -56,7 +55,7 @@ public class PatientController {
 
     @PostMapping
     public String updateOrCreate(HttpServletRequest request) {
-        int userId = SecurityUtil.authUserId();
+        int doctorId = SecurityUtil.authUserId();
         Patient patient = new Patient(request.getParameter("name"),
                 request.getParameter("diagnosis"),
                 request.getParameter("insurance"),
@@ -64,13 +63,13 @@ public class PatientController {
 
         if (request.getParameter("id").isEmpty()) {
             patient.setIll(true);
-            log.info("create {} for user {}", patient, userId);
+            log.info("create {} for user {}", patient, doctorId);
             checkNew(patient);
-            service.create(patient, userId);
+            service.create(patient, doctorId);
         } else {
-            log.info("update {} for user {}", patient, userId);
+            log.info("update {} for user {}", patient, doctorId);
             assureIdConsistent(patient, getId(request));
-            service.update(patient, userId);
+            service.update(patient, doctorId);
         }
         return "redirect:/patients";
     }

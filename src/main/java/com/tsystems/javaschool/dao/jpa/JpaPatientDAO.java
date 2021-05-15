@@ -1,6 +1,6 @@
-package com.tsystems.javaschool.DAO.JPA;
+package com.tsystems.javaschool.dao.jpa;
 
-import com.tsystems.javaschool.DAO.PatientDAO;
+import com.tsystems.javaschool.dao.PatientDAO;
 import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.model.User;
 import org.springframework.stereotype.Repository;
@@ -16,8 +16,8 @@ public class JpaPatientDAO implements PatientDAO {
     private EntityManager em;
 
     @Override
-    public Patient save(Patient patient, int userId ) {
-        patient.setDoctor(em.getReference(User.class, userId));
+    public Patient save(Patient patient, int doctorId) {
+        patient.setDoctor(em.getReference(User.class, doctorId));
         if (patient.isNew()) {
             em.persist(patient);
             return patient;

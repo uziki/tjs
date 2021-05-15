@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.DAO;
+package com.tsystems.javaschool.dao;
 
 import com.tsystems.javaschool.model.Prescription;
 
@@ -14,4 +14,6 @@ public interface PrescriptionDAO {
     List<Prescription> getAll();
 
     List<Prescription> getAllWithId(int patientId);
+
+    Prescription saveWithData(Prescription prescription, int patientId, int doctorId);
 }

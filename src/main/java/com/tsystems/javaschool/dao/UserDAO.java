@@ -1,6 +1,5 @@
-package com.tsystems.javaschool.DAO;
+package com.tsystems.javaschool.dao;
 
-import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

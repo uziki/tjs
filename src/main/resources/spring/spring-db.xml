@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:property-placeholder location="classpath:db/postgres.properties" system-properties-mode="OVERRIDE"/>
-    <context:component-scan base-package="com.tsystems.javaschool.DAO"/>
+    <context:component-scan base-package="com.tsystems.javaschool.dao"/>
 
 
     <bean id="dataSource"
@@ -45,7 +45,7 @@
 
     <tx:annotation-driven/>
 
-    <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
+    <!-- Transaction manager for a single jpa EntityManagerFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 

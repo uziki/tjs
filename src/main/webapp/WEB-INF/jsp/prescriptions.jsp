@@ -13,7 +13,7 @@
     <hr/>
     <h2>Назначения</h2>
     <h1>${patient.name} - ${patient.diagnosis}</h1>
-    <a href="patients/prescriptions/create?type=medicine">Новое лекарство</a> <a href="patients/prescriptions/create?type=procedure">Новая процедура</a>
+    <a href="patients/prescriptions/create?patientid=${patient.id}&type=medicine">Новое лекарство</a> <a href="patients/prescriptions/create?patientid=${patient.id}&type=procedure">Новая процедура</a>
 
     <table border="1" cellpadding="8" cellspacing="0">
 
@@ -30,8 +30,13 @@
             <tr>
                 <td>${prescription}</td>
                 <td>${prescription.doctor.name}</td>
+                <c:if test="${prescription.active}">
                 <td><a href="patients/prescriptions/update?id=${prescription.id}">Изменить</a></td>
                 <td><a href="patients/prescriptions/delete?id=${prescription.id}">Отменить</a></td>
+                </c:if>
+                <c:if test="${prescription.active == false}">
+                    <td colspan="2" align="center">Отменено</td>
+                </c:if>
             </tr>
         </c:forEach>
     </table>

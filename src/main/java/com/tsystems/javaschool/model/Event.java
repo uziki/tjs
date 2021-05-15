@@ -9,9 +9,16 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NamedQueries({
+        @NamedQuery(name = Event.DELETE, query = "DELETE FROM Event e WHERE e.id=:id"),
+        @NamedQuery(name = Event.ALL_SORTED, query = "SELECT e FROM Event e ORDER BY e.dateTime DESC")
+})
 @Entity
 @Table(name = "events")
 public class Event extends AbstractBaseEntity {
+
+    public static final String DELETE = "Event.delete";
+    public static final String ALL_SORTED = "Event.getAllSorted";
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)

@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.util;
 
 import com.tsystems.javaschool.model.AbstractBaseEntity;
-import com.tsystems.javaschool.util.Exception.NotFoundException;
+import com.tsystems.javaschool.util.exception.NotFoundException;
 
 public class ValidationUtil {
 

@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.service.patient;
 
 import com.tsystems.javaschool.model.Patient;
-import com.tsystems.javaschool.util.Exception.NotFoundException;
+import com.tsystems.javaschool.util.exception.NotFoundException;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface PatientService {
 
     List<Patient> getAll();
 
-    void update(Patient patient, int userId) throws NotFoundException;
+    void update(Patient patient, int doctorId) throws NotFoundException;
 
-    Patient create(Patient patient, int userId);
+    Patient create(Patient patient, int doctorId);
 }

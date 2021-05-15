@@ -1,7 +1,10 @@
-package com.tsystems.javaschool.DAO.JPA;
+package com.tsystems.javaschool.dao.jpa;
 
-import com.tsystems.javaschool.DAO.PrescriptionDAO;
+import com.tsystems.javaschool.dao.PrescriptionDAO;
+import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.model.Prescription;
+import com.tsystems.javaschool.model.ProcedureOrMedicine;
+import com.tsystems.javaschool.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -16,6 +19,8 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
 
     @Override
     public Prescription save(Prescription prescription) {
+        ProcedureOrMedicine pom = prescription.getProcedureOrMedicine();
+        em.persist(pom);
         if (prescription.isNew()) {
             em.persist(prescription);
             return prescription;
@@ -48,5 +53,12 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
         return em.createNamedQuery(Prescription.ALL_WITH_ID, Prescription.class)
                 .setParameter("patientId", patientId)
                 .getResultList();
+    }
+
+    @Override
+    public Prescription saveWithData(Prescription prescription, int patientId, int doctorId) {
+        prescription.setDoctor(em.getReference(User.class, doctorId));
+        prescription.setPatient(em.getReference(Patient.class, patientId));
+        return save(prescription);
     }
 }

@@ -1,11 +1,11 @@
-package com.tsystems.javaschool.DAO;
+package com.tsystems.javaschool.dao;
 
 import com.tsystems.javaschool.model.Patient;
 
 import java.util.List;
 
 public interface PatientDAO {
-    Patient save(Patient patient, int userId);
+    Patient save(Patient patient, int doctorId);
 
     //boolean delete(int id);
 

@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.service.patient;
 
-import com.tsystems.javaschool.DAO.PatientDAO;
+import com.tsystems.javaschool.dao.PatientDAO;
 import com.tsystems.javaschool.model.Patient;
-import com.tsystems.javaschool.util.Exception.NotFoundException;
+import com.tsystems.javaschool.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,13 +43,13 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     @Transactional
-    public void update(Patient patient, int userId) throws NotFoundException {
-        dao.save(patient, userId);
+    public void update(Patient patient, int doctorId) throws NotFoundException {
+        dao.save(patient, doctorId);
     }
 
     @Override
     @Transactional
-    public Patient create(Patient patient, int userId) {
-        return dao.save(patient, userId);
+    public Patient create(Patient patient, int doctorId) {
+        return dao.save(patient, doctorId);
     }
 }

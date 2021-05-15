@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.util.Exception;
+package com.tsystems.javaschool.util.exception;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

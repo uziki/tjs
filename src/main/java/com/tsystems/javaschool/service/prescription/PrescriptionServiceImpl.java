@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.service.prescription;
 
-import com.tsystems.javaschool.DAO.PrescriptionDAO;
+import com.tsystems.javaschool.dao.PrescriptionDAO;
 import com.tsystems.javaschool.model.Prescription;
-import com.tsystems.javaschool.util.Exception.NotFoundException;
+import com.tsystems.javaschool.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,5 +54,15 @@ public class PrescriptionServiceImpl implements PrescriptionService{
     @Transactional
     public Prescription create(Prescription prescription) {
         return dao.save(prescription);
+    }
+
+    @Override
+    public Prescription createWithData (Prescription prescription, int patientId, int doctorId) {
+        return dao.saveWithData(prescription, patientId, doctorId);
+    }
+
+    @Override
+    public void updateWithData(Prescription prescription, int patientId, int doctorId) {
+        dao.saveWithData(prescription, patientId, doctorId);
     }
 }

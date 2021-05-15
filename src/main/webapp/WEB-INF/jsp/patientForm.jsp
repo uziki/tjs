@@ -23,7 +23,7 @@
             <dd><input type="text" value="${patient.insuranceNumber}" name="insurance" required></dd>
         </dl>
         <dl>
-            <c:if test="${patient.ill == fal}" >
+            <c:if test="${patient.ill == false}" >
             <select name="isill">
                 <option value="${true}" selected>Болен</option>
                 <option value="${false}">Здоров</option>

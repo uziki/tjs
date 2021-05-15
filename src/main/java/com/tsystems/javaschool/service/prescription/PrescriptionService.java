@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.service.prescription;
 
 import com.tsystems.javaschool.model.Prescription;
-import com.tsystems.javaschool.util.Exception.NotFoundException;
+import com.tsystems.javaschool.util.exception.NotFoundException;
 
 import java.util.List;
 
@@ -17,4 +17,8 @@ public interface PrescriptionService {
     void update(Prescription prescription) throws NotFoundException;
 
     Prescription create(Prescription prescription);
+
+    Prescription createWithData (Prescription prescription, int patientId, int doctorId);
+
+    void updateWithData(Prescription prescription, int patientId, int doctorId);
 }
