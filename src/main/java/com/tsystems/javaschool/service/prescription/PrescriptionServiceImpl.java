@@ -56,13 +56,4 @@ public class PrescriptionServiceImpl implements PrescriptionService{
         return dao.save(prescription);
     }
 
-    @Override
-    public Prescription createWithData (Prescription prescription, int patientId, int doctorId) {
-        return dao.saveWithData(prescription, patientId, doctorId);
-    }
-
-    @Override
-    public void updateWithData(Prescription prescription, int patientId, int doctorId) {
-        dao.saveWithData(prescription, patientId, doctorId);
-    }
 }

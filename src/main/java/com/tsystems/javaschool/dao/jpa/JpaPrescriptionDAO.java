@@ -54,11 +54,4 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
                 .setParameter("patientId", patientId)
                 .getResultList();
     }
-
-    @Override
-    public Prescription saveWithData(Prescription prescription, int patientId, int doctorId) {
-        prescription.setDoctor(em.getReference(User.class, doctorId));
-        prescription.setPatient(em.getReference(Patient.class, patientId));
-        return save(prescription);
-    }
 }

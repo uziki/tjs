@@ -6,21 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
-@Repository
-@Transactional(readOnly = true)
-public class UserDAO {
+public interface UserDAO {
+    User save(User user);
 
-    @PersistenceContext
-    private EntityManager em;
+    boolean delete(int id);
 
-    @Transactional
-    public boolean save(User user) {
-        if (user.isNew()) {
-            em.persist(user);
-            return true;
-        } else {
-            return false;
-        }
-    }
+    User get(int id);
+
+    List<User> getAll();
 }

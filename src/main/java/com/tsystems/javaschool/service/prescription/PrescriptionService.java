@@ -17,8 +17,4 @@ public interface PrescriptionService {
     void update(Prescription prescription) throws NotFoundException;
 
     Prescription create(Prescription prescription);
-
-    Prescription createWithData (Prescription prescription, int patientId, int doctorId);
-
-    void updateWithData(Prescription prescription, int patientId, int doctorId);
 }

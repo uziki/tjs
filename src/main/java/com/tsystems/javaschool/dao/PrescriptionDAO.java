@@ -14,6 +14,4 @@ public interface PrescriptionDAO {
     List<Prescription> getAll();
 
     List<Prescription> getAllWithId(int patientId);
-
-    Prescription saveWithData(Prescription prescription, int patientId, int doctorId);
 }

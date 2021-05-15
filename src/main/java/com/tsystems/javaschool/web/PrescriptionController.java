@@ -3,6 +3,7 @@ package com.tsystems.javaschool.web;
 import com.tsystems.javaschool.model.Prescription;
 import com.tsystems.javaschool.model.PrescriptionType;
 import com.tsystems.javaschool.model.ProcedureOrMedicine;
+import com.tsystems.javaschool.service.PrescriptionEventFacade;
 import com.tsystems.javaschool.service.prescription.PrescriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +26,13 @@ import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
 @RequestMapping("/patients/prescriptions")
 public class PrescriptionController {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private PrescriptionEventFacade facadeService;
     private PrescriptionService prescriptionService;
 
-
-    public PrescriptionController(PrescriptionService prescriptionService) {
+    @Autowired
+    public PrescriptionController(PrescriptionService prescriptionService, PrescriptionEventFacade facadeService) {
         this.prescriptionService = prescriptionService;
+        this.facadeService = facadeService;
     }
 
     @GetMapping("/create")
@@ -63,13 +66,12 @@ public class PrescriptionController {
         int patientId = Integer.parseInt(request.getParameter("patientid"));
         int dose = Integer.parseInt(request.getParameter("dose"));
         int timePeriod = Integer.parseInt(request.getParameter("timeperiod"));
+        String pomName = request.getParameter("name");
+        String pomType = request.getParameter("type");
         String timePattern = "1:" + request.getParameter("morning")
                 + " 2:" + request.getParameter("afternoon")
                 + " 3:" + request.getParameter("evening");
-        ProcedureOrMedicine pom = new ProcedureOrMedicine(request.getParameter("name"),
-                PrescriptionType.valueOf(request.getParameter("type")));
         Prescription prescription = new Prescription();
-        prescription.setProcedureOrMedicine(pom);
         prescription.setDose(dose);
         prescription.setTimePeriod(timePeriod);
         prescription.setTimePattern(timePattern);
@@ -77,11 +79,11 @@ public class PrescriptionController {
         if (request.getParameter("id").isEmpty()) {
             log.info("create {} for patient {} from doctor {}", prescription, patientId, doctorId);
             checkNew(prescription);
-            prescriptionService.createWithData(prescription, patientId, doctorId);
+            facadeService.createPrescription(prescription, patientId, doctorId, pomName, pomType);
         } else {
             log.info("update {} for patient {} from doctor {}", prescription, patientId, doctorId);
             assureIdConsistent(prescription, getId(request));
-            prescriptionService.updateWithData(prescription, patientId, doctorId);
+            facadeService.updatePrescription(prescription, patientId, doctorId, pomName, pomType);
         }
         return "redirect:/patients";
     }
