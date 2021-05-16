@@ -27,7 +27,6 @@ public class PatientServiceImpl implements PatientService {
         return checkNotFoundWithId(dao.get(id), id);
     }
 
-    //TODO добавить сюда сервис назначений, удалить оттуда назначения человека
     @Override
     @Transactional
     public void delete(int id) throws NotFoundException {

@@ -15,4 +15,6 @@ public interface EventService {
     void update(Event event) throws NotFoundException;
 
     Event create(Event event);
+
+    List<Event> getByPrescriptionId(int prescriptionId);
 }

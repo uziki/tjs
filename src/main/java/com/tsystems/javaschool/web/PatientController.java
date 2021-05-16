@@ -59,7 +59,6 @@ public class PatientController {
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
         int doctorId = SecurityUtil.authUserId();
-        log.info("get meal {} for user {}", getId(request), doctorId);
         Patient patient = service.get(getId(request));
         model.addAttribute("patient", patient);
         return "patientForm";

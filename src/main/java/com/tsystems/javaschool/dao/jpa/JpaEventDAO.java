@@ -25,6 +25,13 @@ public class JpaEventDAO implements EventDAO {
     }
 
     @Override
+    public List<Event> getByPrescriptionId(int prescriptionId) {
+        return em.createNamedQuery(Event.GET_BY_PRESCRIPTION, Event.class)
+                .setParameter("prescriptionId", prescriptionId)
+                .getResultList();
+    }
+
+    @Override
     public Event get(int id) {
         return em.find(Event.class, id);
     }

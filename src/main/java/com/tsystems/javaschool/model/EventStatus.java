@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.model;
 
 public enum EventStatus {
-    PLANNED,
-    DONE,
-    CANCELED
+    STATUS_PLANNED,
+    STATUS_DONE,
+    STATUS_CANCELED
 }

@@ -32,7 +32,6 @@ public class PrescriptionServiceImpl implements PrescriptionService{
         return checkNotFoundWithId(dao.getWithId(id, patientId), id);
     }
 
-    //TODO реализовать отмену событий
     @Override
     @Transactional
     public void delete(int id) throws NotFoundException {

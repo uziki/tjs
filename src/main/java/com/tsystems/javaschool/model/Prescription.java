@@ -8,7 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.List;
 
-import static com.tsystems.javaschool.util.PrescriptionUtil.DAYS;
+import static com.tsystems.javaschool.util.DateTimeUtil.DAYS;
+
 
 @NamedQueries({
         @NamedQuery(name = Prescription.DELETE, query = "DELETE FROM Prescription p WHERE p.id=:id"),

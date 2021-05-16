@@ -9,7 +9,8 @@
 </head>
 <body>
 <section>
-    <h3><a href="${pageContext.request.contextPath}">На главную</a></h3>
+    <%--<h3><a href="${pageContext.request.contextPath}">На главную</a></h3>--%>
+    <h3><a href="patients">К пациентам</a> </h3>
     <hr/>
     <h2>Назначения</h2>
     <h1>${patient.name} - ${patient.diagnosis}</h1>

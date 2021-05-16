@@ -12,4 +12,6 @@ public interface EventDAO {
     Event get(int id);
 
     List<Event> getAll();
+
+    List<Event> getByPrescriptionId(int prescriptionId);
 }

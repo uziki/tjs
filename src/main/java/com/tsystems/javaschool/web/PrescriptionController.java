@@ -80,8 +80,8 @@ public class PrescriptionController {
             checkNew(prescription);
             facadeService.createPrescription(prescription, patientId, doctorId, pomName, pomType);
         } else {
-            log.info("update {} for patient {} from doctor {}", prescription, patientId, doctorId);
             assureIdConsistent(prescription, getId(request));
+            log.info("update {} for patient {} from doctor {}", prescription, patientId, doctorId);
             facadeService.updatePrescription(prescription, patientId, doctorId, pomName, pomType);
         }
         redirectAttributes.addAttribute("id", patientId);

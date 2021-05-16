@@ -61,12 +61,11 @@ CREATE TABLE events
     date_time       TIMESTAMP NOT NULL,
     proc_or_meds_id INTEGER   NOT NULL,
     prescription_id INTEGER   NOT NULL,
-    message         VARCHAR   NOT NULL,
+    message         VARCHAR,
     dose            INTEGER,
     status          VARCHAR NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients (id) ON DELETE CASCADE,
     FOREIGN KEY (prescription_id) REFERENCES prescriptions (id) ON DELETE CASCADE,
     FOREIGN KEY (proc_or_meds_id) REFERENCES proc_or_meds (id)
 );
-CREATE UNIQUE INDEX meals_unique_user_datetime_idx ON events (patient_id, date_time);
 

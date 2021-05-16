@@ -1,4 +1,3 @@
-<%@ page import="java.util.stream.Collectors" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -21,7 +20,6 @@
             <th>Диагноз</th>
             <th>Врач</th>
             <th>История назначений</th>
-            <th>Добавить назначение</th>
             <th>Редактировать назначения</th>
             <th>Выписать пациента</th>
         </tr>
@@ -33,7 +31,6 @@
                 <td>${patient.diagnosis}</td>
                 <td>${patient.doctorName}</td>
                 <td>${patient.prescriptions}</td>
-                <td>+</td>
                 <td><a href="patients/prescriptions?id=${patient.id}">Изменить</a></td>
                 <td><a href="patients/delete?id=${patient.id}">Выписать</a></td>
             </tr>

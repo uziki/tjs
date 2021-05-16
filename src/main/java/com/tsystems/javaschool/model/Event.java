@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 
 @NamedQueries({
         @NamedQuery(name = Event.DELETE, query = "DELETE FROM Event e WHERE e.id=:id"),
-        @NamedQuery(name = Event.ALL_SORTED, query = "SELECT e FROM Event e ORDER BY e.dateTime DESC")
+        @NamedQuery(name = Event.ALL_SORTED, query = "SELECT e FROM Event e ORDER BY e.dateTime ASC"),
+        @NamedQuery(name = Event.GET_BY_PRESCRIPTION, query = "SELECT e FROM Event e WHERE e.prescription.id=:prescriptionId")
 })
 @Entity
 @Table(name = "events")
@@ -19,6 +20,7 @@ public class Event extends AbstractBaseEntity {
 
     public static final String DELETE = "Event.delete";
     public static final String ALL_SORTED = "Event.getAllSorted";
+    public static final String GET_BY_PRESCRIPTION = "Event.getByPrescription";
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
@@ -28,7 +30,6 @@ public class Event extends AbstractBaseEntity {
 
     @Column(name = "date_time", nullable = false)
     @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
@@ -42,8 +43,7 @@ public class Event extends AbstractBaseEntity {
     @NotNull
     private ProcedureOrMedicine procedureOrMedicine;
 
-    @NotBlank
-    @Column(name = "message", nullable = false)
+    @Column(name = "message")
     private String message;
 
     @Column(name = "dose", nullable = false)
@@ -57,10 +57,19 @@ public class Event extends AbstractBaseEntity {
 
     public Event() {}
 
+    public Event(Prescription prescription, LocalDateTime localDateTime) {
+        this.prescription = prescription;
+        this.patient = prescription.getPatient();
+        this.dateTime = localDateTime;
+        this.eventStatus = EventStatus.STATUS_PLANNED;
+        this.procedureOrMedicine = prescription.getProcedureOrMedicine();
+        this.dose = prescription.getDose();
+    }
+
     public Event(Patient patient, LocalDateTime dateTime, String procedureOrMedicineName, PrescriptionType type, int dose) {
         this.patient = patient;
         this.dateTime = dateTime;
-        this.eventStatus = EventStatus.PLANNED;
+        this.eventStatus = EventStatus.STATUS_PLANNED;
         this.procedureOrMedicine = new ProcedureOrMedicine(procedureOrMedicineName, type);
         this.dose = dose;
     }

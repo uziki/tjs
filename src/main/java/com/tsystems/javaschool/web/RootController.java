@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.web;
 
 import com.tsystems.javaschool.model.Patient;
+import com.tsystems.javaschool.service.event.EventService;
 import com.tsystems.javaschool.service.patient.PatientService;
 import com.tsystems.javaschool.service.prescription.PrescriptionService;
 import org.slf4j.Logger;
@@ -16,14 +17,16 @@ import static com.tsystems.javaschool.util.ControllerUtil.getId;
 
 @Controller
 public class RootController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
     private PatientService patientService;
     private PrescriptionService prescriptionService;
+    private EventService eventService;
 
     @Autowired
-    public void setService(PatientService patientService, PrescriptionService prescriptionService) {
+    public void setService(PatientService patientService, PrescriptionService prescriptionService,
+                           EventService eventService) {
         this.patientService = patientService;
         this.prescriptionService = prescriptionService;
+        this.eventService = eventService;
     }
 
     @GetMapping("/")
@@ -39,7 +42,7 @@ public class RootController {
 
     @GetMapping("/events")
     public String getEvents(Model model) {
-        //model.addAttribute("events", dao.getAll());
+        model.addAttribute("events", eventService.getAll());
         return "events";
     }
 

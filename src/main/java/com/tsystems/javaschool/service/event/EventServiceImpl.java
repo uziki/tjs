@@ -38,6 +38,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public List<Event> getByPrescriptionId(int prescriptionId) {
+        return dao.getByPrescriptionId(prescriptionId);
+    }
+
+    @Override
     public void update(Event event) throws NotFoundException {
         checkNotFoundWithId(dao.save(event), event.getId());
     }
