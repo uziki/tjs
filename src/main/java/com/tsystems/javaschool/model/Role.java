@@ -3,11 +3,12 @@ package com.tsystems.javaschool.model;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
-    ROLE_DOCTOR,
-    ROLE_NURSE;
+    DOCTOR,
+    NURSE;
 
+    //    https://stackoverflow.com/a/19542316/548473
     @Override
     public String getAuthority() {
-        return name();
+        return "ROLE_" + name();
     }
 }

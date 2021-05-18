@@ -3,44 +3,45 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Список пациентов</title>
 </head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<section>
-    <%--<h3><a href="${pageContext.request.contextPath}">На главную</a></h3>--%>
-    <h3><a href="patients">К пациентам</a> </h3>
-    <hr/>
-    <h2>Назначения</h2>
-    <h1>${patient.name} - ${patient.diagnosis}</h1>
-    <a href="patients/prescriptions/create?patientid=${patient.id}&type=medicine">Новое лекарство</a> <a href="patients/prescriptions/create?patientid=${patient.id}&type=procedure">Новая процедура</a>
-
-    <table border="1" cellpadding="8" cellspacing="0">
-
-        <thead>
-        <tr>
-            <th>Назначение</th>
-            <th>Врач</th>
-            <th>Изменить</th>
-            <th>Отменить</th>
-        </tr>
-        </thead>
-        <c:forEach items="${prescriptions}" var="prescription">
-            <jsp:useBean id="prescription" type="com.tsystems.javaschool.model.Prescription"/>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<div class="jumbotron pt-4">
+    <div class="container">
+        <h2>Назначения</h2>
+        <h1>${patient.name} - ${patient.diagnosis}</h1>
+        <a class="btn btn-primary" href="patients/prescriptions/create?patientid=${patient.id}&type=medicine" role="button"><span class="fa fa-plus"></span>Новое лекарство</a>
+        <a class="btn btn-primary" href="patients/prescriptions/create?patientid=${patient.id}&type=procedure" role="button"><span class="fa fa-plus"></span>Новая процедура</a>
+        <table class="table  table-bordered table-hover mt-2">
+            <thead>
             <tr>
-                <td>${prescription}</td>
-                <td>${prescription.doctor.name}</td>
-                <c:if test="${prescription.active}">
-                <td><a href="patients/prescriptions/update?id=${prescription.id}">Изменить</a></td>
-                <td><a href="patients/prescriptions/delete?id=${prescription.id}&patientid=${patient.id}">Отменить</a></td>
-                </c:if>
-                <c:if test="${prescription.active == false}">
-                    <td colspan="2" align="center">Отменено</td>
-                </c:if>
+                <th>Назначение</th>
+                <th class="text-center">Врач</th>
+                <th class="text-center">Изменить</th>
+                <th class="text-center">Отменить</th>
             </tr>
-        </c:forEach>
-    </table>
-</section>
+            </thead>
+            <c:forEach items="${prescriptions}" var="prescription">
+                <jsp:useBean id="prescription" type="com.tsystems.javaschool.model.Prescription"/>
+                <tr data-prescrtiptionActive="${prescription.active}">
+                    <td>${prescription}</td>
+                    <td class="text-center">${prescription.doctor.name}</td>
+                    <c:if test="${prescription.active}">
+                        <td class="text-center"><a href="patients/prescriptions/update?id=${prescription.id}"><span class="fa fa-pencil fa-2x"></span></a></td>
+                        <td class="text-center"><a href="patients/prescriptions/delete?id=${prescription.id}&patientid=${patient.id}"><span class="fa fa-remove fa-2x"></span></a>
+                        </td>
+                    </c:if>
+                    <c:if test="${prescription.active == false}">
+                        <td colspan="2" align="center">Отменено</td>
+                    </c:if>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+</div>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

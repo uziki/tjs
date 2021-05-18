@@ -1,17 +1,29 @@
 package com.tsystems.javaschool.web;
 
-public class SecurityUtil {
+import com.tsystems.javaschool.AuthorizedUser;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-    private static int id = 1;
+import static java.util.Objects.requireNonNull;
+
+public class SecurityUtil {
 
     private SecurityUtil() {
     }
-
-    public static int authUserId() {
-        return id;
+    public static AuthorizedUser safeGet() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
+        return (principal instanceof AuthorizedUser) ? (AuthorizedUser) principal : null;
     }
 
-    public static void setAuthUserId(int id) {
-        SecurityUtil.id = id;
+    public static AuthorizedUser get() {
+        return requireNonNull(safeGet(), "No authorized user found");
+    }
+
+    public static int authUserId() {
+        return get().getId();
     }
 }

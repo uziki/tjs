@@ -1,33 +1,40 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Регистрация</title>
-</head>
-<body>
-<h1>Регистрация персонала</h1>
-<form action="register" method="post">
-    <table style="with: 50%">
-        <tr>
-            <td>ФИО</td>
-            <td><input type="text" name="name" /></td>
-        </tr>
-        <tr>
-            <td>email</td>
-            <td><input type="text" name="Электронная почта" /></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="Пароль" /></td>
-        </tr>
+<body class="text-center">
+<h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+<div class="container">
+    <form method="post" action="register">
+        <dl>
+            <dt>Имя:</dt>
+            <dd><input type="text" placeholder="Name" name="name" required></dd>
+        </dl>
+        <dl>
+            <dt>Email:</dt>
+            <dd><input type="email" placeholder="Email" name="email" required></dd>
+        </dl>
+        <dl>
+            <dt>Пароль:</dt>
+            <dd><input type="text" placeholder="Password" name="password" required></dd>
+        </dl>
+        <dl>
+            <select name="role">
+                <option value="DOCTOR" selected>Врач</option>
+                <option value="NURSE">Медсестра</option>
+            </select>
+        </dl>
+        <c:if test="${not empty param.message}">
+            <div class="message">Пользователь с таким email уже существует!</div>
+        </c:if>
+        <button type="submit">Зарегистрировать</button>
+        <button onclick="window.history.back()" type="button">Отмена</button>
+    </form>
+</div>
 
-        <tr><select name="isDoctor">
-        <option value="1" selected>Врач</option>
-        <option value="0">Медсестра</option>
-        </select></tr>
-        </table>
-    <input type="submit" value="Submit" /></form>
+
 </body>
 </html>

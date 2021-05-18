@@ -3,53 +3,63 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://javaschool.tsystems.com/functions" %>
 <html>
-<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Список событий</title>
 </head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<section>
-    <h3><a href="${pageContext.request.contextPath}">На главную</a></h3>
-    <hr/>
-    <h2>Предстоящие события</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <thead>
-        <tr>
-            <th>Пациент</th>
-            <th align="center">Назначение</th>
-            <th>Дата</th>
-            <th align="center">Статус события</th>
-            <th>Изменить статус</th>
-            <th>Комментарий</th>
-        </tr>
-        </thead>
-        <c:forEach items="${events}" var="event">
-            <jsp:useBean id="event" type="com.tsystems.javaschool.model.Event"/>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<div class="jumbotron pt-4">
+    <div class="container">
+        <h2>Предстоящие события</h2>
+        <table class="table table-bordered table-hover mt-2">
+            <thead>
             <tr>
-                <td>${event.patient.name}</td>
-                <td align="center">${event.procedureOrMedicine.name} <c:if
-                        test="${event.dose > 0}"> ${event.dose} шт </c:if></td>
-                <td>${fn:formatDateTime(event.dateTime)}</td>
-                    <%--<td>${event.eventStatus}</td>--%>
-                <td align="center"><c:set var="status" scope="session" value="${event.eventStatus}"/>
-                    <c:choose>
-                        <c:when test="${status == 'STATUS_PLANNED'}">
-                            Запланировано
-                        </c:when>
-                        <c:when test="${status == 'STATUS_DONE'}">
-                            Выполнено
-                        </c:when>
-                        <c:otherwise>
-                            Отменено
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a href="events/update?id=${event.id}">Изменить
-                    статус</a></c:if></td>
-                <td>${event.message}</td>
+                <th>Дата</th>
+                <th>Пациент</th>
+                <th class="text-center">Назначение</th>
+                <th class="text-center">Статус события</th>
+                <th colspan="2" class="text-center">Изменить статус</th>
+                <th>Комментарий</th>
             </tr>
-        </c:forEach>
-    </table>
-</section>
+            </thead>
+            <c:forEach items="${events}" var="event">
+                <jsp:useBean id="event" type="com.tsystems.javaschool.model.Event"/>
+                <c:set var="status" scope="session" value="${event.eventStatus}"/>
+                <tr <c:choose>
+                    <c:when test="${status == 'STATUS_CANCELED'}">
+                        data-eCanceled
+                    </c:when>
+                    <c:when test="${status == 'STATUS_DONE'}">
+                        data-eDone
+                    </c:when>
+                </c:choose>>
+                    <td>${fn:formatDateTime(event.dateTime)}</td>
+                        <%--<td>${event.eventStatus}</td>--%>
+                    <td>${event.patient.name}</td>
+                    <td class="text-center">${event.procedureOrMedicine.name} <c:if
+                            test="${event.dose > 0}"> ${event.dose} шт </c:if></td>
+                    <td class="text-center">
+                        <c:choose>
+                            <c:when test="${status == 'STATUS_PLANNED'}">
+                                Запланировано
+                            </c:when>
+                            <c:when test="${status == 'STATUS_DONE'}">
+                                Выполнено
+                            </c:when>
+                            <c:otherwise>
+                                Отменено
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a class="btn btn-success" href="events/done?id=${event.id}" role="button"><span class="fa fa-check"></span></a></c:if></td>
+                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a class="btn btn-danger" href="events/cancel?id=${event.id}" role="button"><span class="fa fa-times"></span></a></c:if></td>
+                    <td>${event.message}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
+</div>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

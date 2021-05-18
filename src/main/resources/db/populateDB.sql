@@ -12,9 +12,9 @@ FROM users;
 ALTER SEQUENCE global_seq RESTART WITH 1;
 
 INSERT INTO users (name, email, password, role)
-VALUES ('doctor1', 'doctor@gmail.com', '{noop}doctor', 'ROLE_DOCTOR'),
-       ('Nurse', 'nurse@gmail.com', '{noop}nurse', 'ROLE_NURSE'),
-       ('doctor2', 'doctor2@gmail.com', '{noop}doctor', 'ROLE_DOCTOR');
+VALUES ('doctor1', 'doctor@gmail.com', 'doctor', 'DOCTOR'),
+       ('Nurse', 'nurse@gmail.com', 'nurse', 'NURSE'),
+       ('doctor2', 'doctor2@gmail.com', 'doctor', 'DOCTOR');
 
 INSERT into patients(name, diagnosis, insurance, ill, user_id)
 VALUES ('Иванов Иван', 'Перелом пупка', '1111', true, 1),

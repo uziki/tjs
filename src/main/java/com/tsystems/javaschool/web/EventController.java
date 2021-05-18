@@ -28,7 +28,16 @@ public class EventController {
         this.service = service;
     }
 
-    @GetMapping("/update")
+    @GetMapping("/done")
+    public String done(HttpServletRequest request) {
+        Event event = service.get(getId(request));
+        log.info("done event {}", event);
+        event.setEventStatus(EventStatus.STATUS_DONE);
+        service.update(event);
+        return "redirect:/events";
+    }
+
+    @GetMapping("/cancel")
     public String update(HttpServletRequest request, Model model) {
         Event event = service.get(getId(request));
         model.addAttribute("event", event);
@@ -36,11 +45,11 @@ public class EventController {
     }
 
     @PostMapping
-    public String update(HttpServletRequest request) {
+    public String cancel(HttpServletRequest request) {
         Event event = service.get(getId(request));
-        event.setEventStatus(EventStatus.valueOf(request.getParameter("status")));
+        log.info("cancel event {}", event);
+        event.setEventStatus(EventStatus.STATUS_CANCELED);
         event.setMessage(request.getParameter("message"));
-        assureIdConsistent(event, getId(request));
         service.update(event);
         return "redirect:/events";
     }

@@ -15,12 +15,28 @@ dd {
     vertical-align: top;
 }
 
-tr[data-mealExcess="false"] {
+tr[data-prescrtiptionActive="true"] {
     color: green;
 }
 
-tr[data-mealExcess="true"] {
+tr[data-prescrtiptionActive="false"] {
     color: red;
+}
+
+tr[data-ill="true"] {
+    color: red;
+}
+
+tr[data-ill="false"] {
+    color: green
+}
+
+tr[data-eCanceled] {
+    color: red;
+}
+
+tr[data-eDone] {
+    color: green
 }
 
 header, footer {

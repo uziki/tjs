@@ -30,6 +30,13 @@ public class JpaUserDAO implements UserDAO {
     }
 
     @Override
+    public User getByEmail(String email) {
+        return em.createNamedQuery(User.GET_BY_EMAIL, User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
+    @Override
     public List<User> getAll() {
         return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }

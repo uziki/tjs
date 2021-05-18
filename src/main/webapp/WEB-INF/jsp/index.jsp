@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="ru">
-<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <meta charset="UTF-8">
     <title>Больница</title>
 </head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <h3>Проект Больница</h3>
 <hr>
 <ul>
@@ -17,6 +18,7 @@
 <ul>
     <li><a href="register">Регистрация</a></li>
 </ul>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
 

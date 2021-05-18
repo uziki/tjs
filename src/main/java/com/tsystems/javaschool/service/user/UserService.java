@@ -2,6 +2,7 @@ package com.tsystems.javaschool.service.user;
 
 import com.tsystems.javaschool.model.User;
 import com.tsystems.javaschool.util.exception.NotFoundException;
+import org.postgresql.util.PSQLException;
 
 import java.util.List;
 
