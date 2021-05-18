@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
@@ -50,5 +52,27 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event create(Event event) {
         return dao.save(event);
+    }
+
+    @Override
+    public List<Event> getBetweenDates(LocalDateTime startLdt, LocalDateTime endLdt) {
+        List<Event> events;
+        try {
+            events = dao.getBetweenDates(startLdt, endLdt);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return events;
+    }
+
+    @Override
+    public List<Event> findByName(String name) {
+        List<Event> events;
+        try {
+            events = dao.findByName("%" + name + "%");
+        } catch (NoResultException e) {
+            return null;
+        }
+        return events;
     }
 }

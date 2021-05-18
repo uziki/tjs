@@ -14,14 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+
+import java.time.LocalDateTime;
+
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
-import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
 
 @Controller
 @RequestMapping("/events")
 public class EventController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private EventService service;
+    int sort = 0;
+    boolean switcher = false;
+    String findName = "";
 
     @Autowired
     public EventController(EventService service) {
@@ -53,4 +58,37 @@ public class EventController {
         service.update(event);
         return "redirect:/events";
     }
+
+    @GetMapping("/sort")
+    public String sort() {
+        sort = sort < 2 ? ++sort : 0;
+        return "redirect:/events";
+    }
+
+    @GetMapping
+    public String get(Model model) {
+        switch (sort) {
+            case 0:
+                model.addAttribute("events", service.getAll());
+                break;
+            case 1:
+                model.addAttribute("events", service.getBetweenDates(LocalDateTime.now(), LocalDateTime.now().plusDays(1)));
+                break;
+            case 2:
+                model.addAttribute("events", service.getBetweenDates(LocalDateTime.now(), LocalDateTime.now().plusHours(1)));
+            case 3:
+                model.addAttribute("events", service.findByName(findName));
+                model.addAttribute("find", findName);
+        }
+        model.addAttribute("sort", sort);
+        return "events";
+    }
+
+    @PostMapping("/find")
+    public String find(HttpServletRequest request) {
+        sort = 3;
+        findName = request.getParameter("find");
+        return "redirect:/events";
+    }
+
 }

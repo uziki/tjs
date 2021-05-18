@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -46,5 +47,20 @@ public class JpaEventDAO implements EventDAO {
         return em.createNamedQuery(Event.DELETE)
                 .setParameter("id", id)
                 .executeUpdate() != 0;
+    }
+
+    @Override
+    public List<Event> getBetweenDates(LocalDateTime startLdt, LocalDateTime endLdt) {
+        return em.createNamedQuery(Event.GET_BETWEEN_DATE, Event.class)
+                .setParameter("startDateTime", startLdt)
+                .setParameter("endDateTime", endLdt)
+                .getResultList();
+    }
+
+    @Override
+    public List<Event> findByName(String name) {
+        return em.createNamedQuery(Event.FIND_BY_NAME, Event.class)
+                .setParameter("name", name)
+                .getResultList();
     }
 }

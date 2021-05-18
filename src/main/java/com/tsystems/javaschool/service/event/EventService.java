@@ -2,7 +2,9 @@ package com.tsystems.javaschool.service.event;
 
 import com.tsystems.javaschool.model.Event;
 import com.tsystems.javaschool.util.exception.NotFoundException;
+import net.bytebuddy.asm.Advice;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventService {
@@ -17,4 +19,8 @@ public interface EventService {
     Event create(Event event);
 
     List<Event> getByPrescriptionId(int prescriptionId);
+
+    List<Event> getBetweenDates(LocalDateTime startLdt, LocalDateTime endLdt);
+
+    List<Event> findByName(String name);
 }

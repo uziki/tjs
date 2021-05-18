@@ -12,6 +12,28 @@
 <div class="jumbotron pt-4">
     <div class="container">
         <h2>Предстоящие события</h2>
+        <c:set var="sort" scope="session" value="${sort}"/>
+        <form class="form-check-inline my-sm-2" action="events/find" method="post">
+            <div class="input-group-text">
+                <a class="btn btn-primary" href="events/sort" role="button"><span class="fa fa-sort"></span>
+                    <c:choose>
+                        <c:when test="${sort == 0}">
+                            Показывать все
+                        </c:when>
+                        <c:when test="${sort == 1}">
+                            На ближайшие сутки
+                        </c:when>
+                        <c:when test="${sort == 2}">
+                            На ближайший час
+                        </c:when>
+                        <c:when test="${sort == 3}">
+                            Поиск по
+                        </c:when>
+                    </c:choose></a>
+                <input class="form-control-sm me-2" type="search" name="find" placeholder="${find}" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit"><span class="fa fa-search"></span></button>
+            </div>
+        </form>
         <table class="table table-bordered table-hover mt-2">
             <thead>
             <tr>
@@ -52,8 +74,12 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a class="btn btn-success" href="events/done?id=${event.id}" role="button"><span class="fa fa-check"></span></a></c:if></td>
-                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a class="btn btn-danger" href="events/cancel?id=${event.id}" role="button"><span class="fa fa-times"></span></a></c:if></td>
+                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a
+                            class="btn btn-success" href="events/done?id=${event.id}" role="button"><span
+                            class="fa fa-check"></span></a></c:if></td>
+                    <td class="text-center"><c:if test="${event.eventStatus == 'STATUS_PLANNED'}"><a
+                            class="btn btn-danger" href="events/cancel?id=${event.id}" role="button"><span
+                            class="fa fa-times"></span></a></c:if></td>
                     <td>${event.message}</td>
                 </tr>
             </c:forEach>

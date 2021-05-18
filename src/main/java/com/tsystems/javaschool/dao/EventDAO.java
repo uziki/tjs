@@ -2,6 +2,8 @@ package com.tsystems.javaschool.dao;
 
 import com.tsystems.javaschool.model.Event;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventDAO {
@@ -14,4 +16,8 @@ public interface EventDAO {
     List<Event> getAll();
 
     List<Event> getByPrescriptionId(int prescriptionId);
+
+    List<Event> getBetweenDates(LocalDateTime startLdt, LocalDateTime endLdt);
+
+    List<Event> findByName(String name);
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.time.LocalDateTime;
+
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
 import static com.tsystems.javaschool.web.SecurityUtil.authUserId;
 
@@ -34,11 +36,6 @@ public class RootController {
         this.userService = userService;
     }
 
-    /*@GetMapping("/")
-    public String root() {
-        return "index";
-    }*/
-
     @GetMapping("/")
     public String root() {
         return (userService.get(authUserId()).getRole().equals(Role.DOCTOR) ?
@@ -49,12 +46,6 @@ public class RootController {
     public String getPatients(Model model) {
         model.addAttribute("patients", patientService.getAll());
         return "patients";
-    }
-
-    @GetMapping("/events")
-    public String getEvents(Model model) {
-        model.addAttribute("events", eventService.getAll());
-        return "events";
     }
 
     @GetMapping("/patients/prescriptions")
