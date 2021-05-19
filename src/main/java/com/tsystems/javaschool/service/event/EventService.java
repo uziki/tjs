@@ -2,7 +2,6 @@ package com.tsystems.javaschool.service.event;
 
 import com.tsystems.javaschool.model.Event;
 import com.tsystems.javaschool.util.exception.NotFoundException;
-import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDateTime;
 import java.util.List;

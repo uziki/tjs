@@ -4,24 +4,24 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
-    <title>Список пациентов</title>
+    <title>Patient list</title>
 </head>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron pt-4">
     <div class="container">
-        <h3 class="text-center">Пациенты</h3>
-        <a class="btn btn-primary" href="patients/create" role="button"><span class="fa fa-plus"></span>Новый пациент</a>
+        <h3 class="text-center">Patients</h3>
+        <a class="btn btn-primary" href="patients/create" role="button"><span class="fa fa-plus"></span>New patient</a>
         <table class="table  table-bordered table-hover mt-2">
             <thead>
             <tr>
-                <th>Пациент</th>
-                <th>Диагноз</th>
-                <th>Врач</th>
-                <th>История назначений</th>
-                <th class="text-center">Редактировать назначения</th>
-                <th class="text-center">Выписать пациента</th>
+                <th>Patient</th>
+                <th>Diagnosis</th>
+                <th>Doctor</th>
+                <th>Prescription history</th>
+                <th class="text-center">Edit prescriptions</th>
+                <th class="text-center">Discharge a patient</th>
             </tr>
             </thead>
             <c:forEach items="${patients}" var="patient">

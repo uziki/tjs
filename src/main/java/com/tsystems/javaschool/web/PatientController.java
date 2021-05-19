@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.tsystems.javaschool.util.ControllerUtil.getId;
 import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
 import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
+import static com.tsystems.javaschool.web.SecurityUtil.setAuthUserName;
 
 @Controller
 @RequestMapping("/patients")
@@ -32,15 +33,6 @@ public class PatientController {
         this.facadeService = facadeService;
     }
 
-    /*@GetMapping("/delete")
-    public String delete(HttpServletRequest request) {
-        int doctorId = SecurityUtil.authUserId();
-        int patientId = getId(request);
-        log.info("delete patient {} for user {}", patientId, doctorId);
-        service.delete(patientId);
-        return "redirect:/patients";
-    }*/
-
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         int doctorId = SecurityUtil.authUserId();
@@ -53,14 +45,15 @@ public class PatientController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("patient", new Patient());
+        setAuthUserName(model);
         return "patientForm";
     }
 
     @GetMapping("/update")
     public String update(HttpServletRequest request, Model model) {
-        int doctorId = SecurityUtil.authUserId();
         Patient patient = service.get(getId(request));
         model.addAttribute("patient", patient);
+        setAuthUserName(model);
         return "patientForm";
     }
 
@@ -84,8 +77,6 @@ public class PatientController {
         }
         return "redirect:/patients";
     }
-
-
 
 
 }

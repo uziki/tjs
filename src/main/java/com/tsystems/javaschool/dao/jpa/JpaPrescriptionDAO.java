@@ -1,10 +1,8 @@
 package com.tsystems.javaschool.dao.jpa;
 
 import com.tsystems.javaschool.dao.PrescriptionDAO;
-import com.tsystems.javaschool.model.Patient;
 import com.tsystems.javaschool.model.Prescription;
 import com.tsystems.javaschool.model.ProcedureOrMedicine;
-import com.tsystems.javaschool.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -35,10 +33,10 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
     }
 
     @Override
-    public Prescription getWithId(int id, int patiendId) {
+    public Prescription getWithId(int id, int patientId) {
         return em.createNamedQuery(Prescription.GET_WITH_ID, Prescription.class)
                 .setParameter("id", id)
-                .setParameter("patientId", patiendId)
+                .setParameter("patientId", patientId)
                 .getSingleResult();
     }
 
@@ -49,7 +47,6 @@ public class JpaPrescriptionDAO implements PrescriptionDAO {
                 .setParameter("id", id)
                 .executeUpdate() != 0;
     }
-
 
     @Override
     public List<Prescription> getAll() {

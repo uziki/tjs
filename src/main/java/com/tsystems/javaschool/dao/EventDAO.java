@@ -2,7 +2,6 @@ package com.tsystems.javaschool.dao;
 
 import com.tsystems.javaschool.model.Event;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

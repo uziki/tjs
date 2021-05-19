@@ -3,11 +3,10 @@
 
 <nav class="navbar navbar-dark bg-dark py-0">
     <div class="container">
-        <a href="${pageContext.request.contextPath}" class="navbar-brand"><img src="resources/images/hospital1.png">На
-            главную</a>
+        <a href="${pageContext.request.contextPath}" class="navbar-brand"><img src="resources/images/hospital1.png">Home</a>
         <form class="form-inline my-2">
             <div class="input-group-text">
-                <%--${pageContext.request.userPrincipal.name}--%>
+                Welcome, ${userName}
                 <a class="btn btn-primary" href="logout">
                     <span class="fa fa-sign-out"></span>
                 </a>

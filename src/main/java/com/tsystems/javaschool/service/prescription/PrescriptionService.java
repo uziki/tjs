@@ -8,7 +8,7 @@ import java.util.List;
 public interface PrescriptionService {
     Prescription get(int id) throws NotFoundException;
 
-    Prescription getWithId (int id, int patientId) throws NotFoundException;
+    Prescription getWithId(int id, int patientId) throws NotFoundException;
 
     void delete(int id) throws NotFoundException;
 

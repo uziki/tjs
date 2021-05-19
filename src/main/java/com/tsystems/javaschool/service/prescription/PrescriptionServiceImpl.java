@@ -13,7 +13,7 @@ import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @Transactional
-public class PrescriptionServiceImpl implements PrescriptionService{
+public class PrescriptionServiceImpl implements PrescriptionService {
 
     private final PrescriptionDAO dao;
 

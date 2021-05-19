@@ -1,10 +1,8 @@
 package com.tsystems.javaschool.model;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
         @NamedQuery(name = Event.ALL_SORTED, query = "SELECT e FROM Event e ORDER BY e.dateTime ASC"),
         @NamedQuery(name = Event.GET_BY_PRESCRIPTION, query = "SELECT e FROM Event e WHERE e.prescription.id=:prescriptionId"),
         @NamedQuery(name = Event.GET_BETWEEN_DATE, query = "SELECT e FROM Event e WHERE e.dateTime >= :startDateTime " +
-                "AND e.dateTime <= :endDateTime AND e.eventStatus='STATUS_PLANNED'"),
+                "AND e.dateTime <= :endDateTime AND e.eventStatus='STATUS_PLANNED' ORDER BY e.dateTime ASC"),
         @NamedQuery(name = Event.FIND_BY_NAME, query = "SELECT e FROM Event e WHERE e.patient.name LIKE :name")
 })
 @Entity
@@ -54,13 +52,14 @@ public class Event extends AbstractBaseEntity {
     @Column(name = "dose", nullable = false)
     private int dose;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "prescription_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Prescription prescription;
 
-    public Event() {}
+    public Event() {
+    }
 
     public Event(Prescription prescription, LocalDateTime localDateTime) {
         this.prescription = prescription;

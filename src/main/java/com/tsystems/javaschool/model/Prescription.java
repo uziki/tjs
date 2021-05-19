@@ -28,6 +28,8 @@ public class Prescription extends AbstractBaseEntity {
     public static final String ALL = "Prescription.getAll";
     public static final String GET_WITH_ID = "Prescription.getWithId";
 
+    private static final String SPACE = " ";
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -156,36 +158,26 @@ public class Prescription extends AbstractBaseEntity {
     }
 
     private String medicineToString() {
-        String[] times = timePattern.split(" ");
-        int count;
-        if (timePattern.length() > 18) {
-            count = 3;
-        } else if (timePattern.length() > 13) {
-            count = 2;
-        } else if (timePattern.length() > 8) {
-            count = 1;
-        } else {
-            count = 0;
-        }
-        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " " + getDose() + " шт " + count + " раз(а) в день, в ");
+        String[] times = timePattern.split(SPACE);
+        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " " + getDose() + " pcs at ");
         for (int i = 0; i < 3; i++) {
             if (times[i].length() > 2) {
                 sb.append(times[i].substring(2)).append(", ");
             }
         }
-        sb.append("курс " + getTimePeriod() + " дней(дня)");
+        sb.append("for " + getTimePeriod() + (getTimePeriod() == 1 ? " day" : " days"));
         return sb.toString();
     }
 
     private String procedureToString() {
-        String[] days = timePattern.split(" ");
-        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " по следующим дням: ");
+        String[] days = timePattern.split(SPACE);
+        StringBuilder sb = new StringBuilder(getProcedureOrMedicine().getName() + " on following days: ");
         for (int i = 0; i < 7; i++) {
             if (days[i].length() > 2) {
-                sb.append(DAYS.get(i) + " " + days[i].substring(2) + ", ");
+                sb.append(DAYS.get(i).toLowerCase() + " " + days[i].substring(2) + ", ");
             }
         }
-        sb.append("курс (недель): " + getTimePeriod());
+        sb.append("for " + getTimePeriod() + (getTimePeriod() == 1 ? " week" : " weeks"));
         return sb.toString();
     }
 }

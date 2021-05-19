@@ -7,20 +7,21 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron pt-4">
     <div class="container">
-        <h2>${patient.id == null ? 'Добавить пациента' : 'Изменить пациента'}</h2>
+        <h2>${patient.id == null ? 'New patient' : 'Edit patient'}</h2>
         <jsp:useBean id="patient" type="com.tsystems.javaschool.model.Patient" scope="request"/>
         <form method="post" action="patients">
             <input type="hidden" name="id" value="${patient.id}">
+            <c:if test="${patient.ill == true}"><input type="hidden" name="isill" value="true"></c:if>
             <dl>
-                <dt>Имя:</dt>
+                <dt>Name:</dt>
                 <dd><input type="text" value="${patient.name}" name="name" required></dd>
             </dl>
             <dl>
-                <dt>Диагноз:</dt>
+                <dt>Diagnosis:</dt>
                 <dd><input type="text" value="${patient.diagnosis}" name="diagnosis"></dd>
             </dl>
             <dl>
-                <dt>Номер страховки:</dt>
+                <dt>Insurance number:</dt>
                 <dd><input type="text" value="${patient.insuranceNumber}" name="insurance" required></dd>
             </dl>
             <dl>

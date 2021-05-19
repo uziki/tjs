@@ -8,40 +8,40 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron pt-4">
     <div class="container">
-        <h2>${prescription.id == null ? "Назначить лекарство" : "Изменить назначенное лекарство"}</h2>
+        <h2>${prescription.id == null ? "Prescribe medicine" : "Change prescribed medication"}</h2>
         <jsp:useBean id="prescription" type="com.tsystems.javaschool.model.Prescription" scope="request"/>
         <form method="post" action="patients/prescriptions">
             <input type="hidden" name="id" value="${prescription.id}">
             <input type="hidden" name="type" value="TYPE_MEDICINE">
-            <input type="hidden" name="patientid" value="${patientId}">
+            <input type="hidden" name="patientId" value="${patientId}">
 
             <dl>
-                <dt>Название:</dt>
+                <dt>Name:</dt>
                 <dd><input type="text" value="${prescription.procedureOrMedicine.name}" name="name" required
                 <c:if test="${prescription.active}"> disabled </c:if> </dd>
             </dl>
             <dl>
-                <dt>Время приема</dt>
+                <dt>Time</dt>
             </dl>
             <dl>
-                <dt>Утром:</dt>
+                <dt>In the morning:</dt>
                 <dd><input type="time" value="${time0}" name="morning"></dd>
             </dl>
             <dl>
-                <dt>Днем:</dt>
+                <dt>In the day:</dt>
                 <dd><input type="time" value="${time1}" name="afternoon"></dd>
             </dl>
             <dl>
-                <dt>Вечером:</dt>
+                <dt>In the evening:</dt>
                 <dd><input type="time" value="${time2}" name="evening"></dd>
             </dl>
             <dl>
-                <dt>Доза:</dt>
+                <dt>Dose:</dt>
                 <dd><input type="number" min="1" value="${prescription.dose}" name="dose" required></dd>
             </dl>
             <dl>
-                <dt>Курс (кол-во дней):</dt>
-                <dd><input type="number" min="1" value="${prescription.timePeriod}" name="timeperiod" required></dd>
+                <dt>Number of days:</dt>
+                <dd><input type="number" min="1" value="${prescription.timePeriod}" name="timePeriod" required></dd>
             </dl>
 
 

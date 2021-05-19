@@ -2,7 +2,6 @@ package com.tsystems.javaschool.web;
 
 import com.tsystems.javaschool.model.Prescription;
 import com.tsystems.javaschool.model.PrescriptionType;
-import com.tsystems.javaschool.model.ProcedureOrMedicine;
 import com.tsystems.javaschool.service.PrescriptionEventFacade;
 import com.tsystems.javaschool.service.prescription.PrescriptionService;
 import org.slf4j.Logger;
@@ -20,12 +19,15 @@ import javax.servlet.http.HttpServletRequest;
 import static com.tsystems.javaschool.util.ControllerUtil.*;
 import static com.tsystems.javaschool.util.ValidationUtil.assureIdConsistent;
 import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
+import static com.tsystems.javaschool.web.SecurityUtil.setAuthUserName;
 
 
 @Controller
 @RequestMapping("/patients/prescriptions")
 public class PrescriptionController {
     private final Logger log = LoggerFactory.getLogger(getClass());
+    private final String MEDICINE = "medicine";
+    private final String PROCEDURE = "procedure";
     private PrescriptionEventFacade facadeService;
     private PrescriptionService prescriptionService;
 
@@ -39,10 +41,11 @@ public class PrescriptionController {
     public String create(HttpServletRequest request, Model model) {
         String type = getType(request);
         model.addAttribute("prescription", new Prescription());
-        model.addAttribute("patientId", request.getParameter("patientid"));
-        if (type.equals("medicine")) {
+        model.addAttribute("patientId", request.getParameter("patientId"));
+        setAuthUserName(model);
+        if (MEDICINE.equals(type)) {
             return "medicineForm";
-        } else if (type.equals("procedure")){
+        } else if (PROCEDURE.equals(type)) {
             return "procedureForm";
         }
         return "prescriptions";
@@ -54,6 +57,7 @@ public class PrescriptionController {
         Prescription prescription = prescriptionService.get(getId(request));
         model.addAttribute("prescription", prescription);
         model.addAttribute("patientId", prescription.getPatient().id());
+        setAuthUserName(model);
         addTimePatternToModel(prescription, model);
         if (prescription.getProcedureOrMedicine().getPrescriptionType() == PrescriptionType.TYPE_MEDICINE) {
             return "medicineForm";
@@ -64,8 +68,8 @@ public class PrescriptionController {
     @PostMapping
     public String updateOrCreate(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         int doctorId = SecurityUtil.authUserId();
-        int patientId = Integer.parseInt(request.getParameter("patientid"));
-        int timePeriod = Integer.parseInt(request.getParameter("timeperiod"));
+        int patientId = Integer.parseInt(request.getParameter("patientId"));
+        int timePeriod = Integer.parseInt(request.getParameter("timePeriod"));
         int dose = Integer.parseInt(request.getParameter("dose"));
         String pomName = request.getParameter("name");
         String pomType = request.getParameter("type");
@@ -91,7 +95,7 @@ public class PrescriptionController {
     @GetMapping("/delete")
     public String delete(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         int id = getId(request);
-        int patientId = Integer.parseInt(request.getParameter("patientid"));
+        int patientId = Integer.parseInt(request.getParameter("patientId"));
         log.info("delete prescription {} for patient {}", id, patientId);
         facadeService.deletePrescription(id, patientId);
         redirectAttributes.addAttribute("id", patientId);

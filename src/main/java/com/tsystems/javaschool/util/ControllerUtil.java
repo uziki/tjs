@@ -8,29 +8,28 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 public class ControllerUtil {
+    private static final String SPACE = " ";
+
     public static int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
         return Integer.parseInt(paramId);
     }
 
     public static String getType(HttpServletRequest request) {
-        String type = Objects.requireNonNull(request.getParameter("type"));
-        return type;
+        return Objects.requireNonNull(request.getParameter("type"));
     }
 
-    //Parse prescription timePattern and add it to Model
+    //TODO add more times
     public static void addTimePatternToModel(Prescription prescription, Model model) {
-        //Medicine
         if (prescription.getProcedureOrMedicine().getPrescriptionType() == PrescriptionType.TYPE_MEDICINE) {
-            String times[] = prescription.getTimePattern().split(" ");
+            String[] times = prescription.getTimePattern().split(SPACE);
             for (int i = 0; i < 3; i++) {
                 if (times[i].length() > 2) {
                     model.addAttribute("time" + i, times[i].substring(2));
                 }
             }
-        //Procedure
         } else {
-            String days[] = prescription.getTimePattern().split(" ");
+            String[] days = prescription.getTimePattern().split(SPACE);
             for (int i = 0; i < 7; i++) {
                 if (days[i].length() > 2) {
                     model.addAttribute("day" + i, days[i].substring(2));
@@ -39,15 +38,12 @@ public class ControllerUtil {
         }
     }
 
-    //Parse prescription timePattern from request
     public static String timePatternFromRequest(HttpServletRequest request) {
-        String timePattern = "";
-        //Medicine
+        String timePattern;
         if (request.getParameter("type").equals("TYPE_MEDICINE")) {
             timePattern = "1-" + request.getParameter("morning")
                     + " 2-" + request.getParameter("afternoon")
                     + " 3-" + request.getParameter("evening");
-        //Procedure
         } else {
             timePattern = "1-" + request.getParameter("monday")
                     + " 2-" + request.getParameter("tuesday")
