@@ -4,17 +4,13 @@ import com.tsystems.javaschool.model.Role;
 import com.tsystems.javaschool.model.User;
 import com.tsystems.javaschool.service.user.UserService;
 import com.tsystems.javaschool.util.exception.NotUniqEmailException;
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import static com.tsystems.javaschool.util.ValidationUtil.checkNew;
@@ -31,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register (HttpServletRequest request) {
+    public String register(HttpServletRequest request) {
         User user = new User(request.getParameter("email"),
                 request.getParameter("password"),
                 request.getParameter("name"),
@@ -41,7 +37,7 @@ public class UserController {
         try {
             userService.create(user);
         } catch (NotUniqEmailException e) {
-            return "redirect:/register?message="+e.getMessage();
+            return "redirect:/register?message=" + e.getMessage();
         }
         return "redirect:/login?message=registred_" + user.getEmail();
     }

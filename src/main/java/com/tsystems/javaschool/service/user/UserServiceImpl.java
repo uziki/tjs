@@ -5,28 +5,30 @@ import com.tsystems.javaschool.dao.UserDAO;
 import com.tsystems.javaschool.model.User;
 import com.tsystems.javaschool.util.exception.NotFoundException;
 import com.tsystems.javaschool.util.exception.NotUniqEmailException;
-import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.util.List;
 
-import static com.tsystems.javaschool.util.ValidationUtil.checkNotFound;
+import static com.tsystems.javaschool.util.UserUtil.prepareToSave;
 import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
+
     private UserDAO dao;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDAO dao) {
+    public UserServiceImpl(UserDAO dao, PasswordEncoder passwordEncoder) {
         this.dao = dao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -55,7 +57,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void update(User user) throws NotFoundException {
-        checkNotFoundWithId(dao.save(user), user.getId());
+        checkNotFoundWithId(dao.save(prepareAndSave(user)), user.getId());
+    }
+
+    private User prepareAndSave(User user) {
+        return dao.save(prepareToSave(user, passwordEncoder));
     }
 
     @Override
@@ -63,7 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             User tryUser = dao.getByEmail(user.getEmail());
         } catch (NoResultException e) {
-            return dao.save(user);
+            return dao.save(prepareAndSave(user));
         }
         throw new NotUniqEmailException("not_uniq_email");
     }

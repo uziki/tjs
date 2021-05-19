@@ -3,6 +3,7 @@ package com.tsystems.javaschool.web;
 import com.tsystems.javaschool.AuthorizedUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 
 import static java.util.Objects.requireNonNull;
 
@@ -10,7 +11,8 @@ public class SecurityUtil {
 
     private SecurityUtil() {
     }
-    public static AuthorizedUser safeGet() {
+
+    private static AuthorizedUser safeGet() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null) {
             return null;
@@ -25,5 +27,9 @@ public class SecurityUtil {
 
     public static int authUserId() {
         return get().getId();
+    }
+
+    static void setAuthUserName(Model model) {
+        model.addAttribute("userName", requireNonNull(safeGet()).getUser().getName());
     }
 }

@@ -3,6 +3,6 @@
 <%--https://getbootstrap.com/docs/4.0/examples/sticky-footer/--%>
 <footer class="footer">
     <div class="container">
-        <span class="text-muted">Информационная система автоматизации документооборота медицинского реабилитационного учреждения</span>
+        <span class="text-muted text-center">Information system for automating the document flow of a medical rehabilitation institution</span>
     </div>
 </footer>

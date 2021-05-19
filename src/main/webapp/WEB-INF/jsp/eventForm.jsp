@@ -7,15 +7,11 @@
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <div class="jumbotron pt-4">
     <div class="container">
-        <h2>Причина отмены</h2>
+        <h2>Cause</h2>
         <jsp:useBean id="event" type="com.tsystems.javaschool.model.Event" scope="request"/>
-
         <div class="input-group-prepend">
             <form method="post" action="events">
                 <input type="hidden" name="id" value="${event.id}">
-                <%--<p><input type="text" class="form-control-lg" name="message"></p>--%>
-
-
                 <textarea name="message" class="form-control-lg" aria-label="With textarea"></textarea>
                 <br>
                 <br>

@@ -46,6 +46,7 @@ public class Patient extends AbstractBaseEntity {
     public Patient(String name, String diagnosis, String insuranceNumber, boolean ill) {
         this(null, name, diagnosis, insuranceNumber, ill, null);
     }
+
     public Patient(String name, String diagnosis, String insuranceNumber, boolean ill, User doctor) {
         this(null, name, diagnosis, insuranceNumber, ill, doctor);
     }

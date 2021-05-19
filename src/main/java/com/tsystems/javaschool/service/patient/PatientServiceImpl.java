@@ -14,7 +14,7 @@ import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
 @Service
 @Transactional
 public class PatientServiceImpl implements PatientService {
-
+    private static final String HEALTHY = "HEALTHY";
     private final PatientDAO dao;
 
     @Autowired
@@ -33,7 +33,7 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = get(id);
         patient.setIll(false);
         patient.setPrescriptions(null);
-        patient.setDiagnosis("Здоров");
+        patient.setDiagnosis(HEALTHY);
         update(patient, patient.getDoctor().getId());
     }
 

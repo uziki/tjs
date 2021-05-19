@@ -8,7 +8,6 @@ import com.tsystems.javaschool.service.prescription.PrescriptionService;
 import com.tsystems.javaschool.service.procedureOrMedicineService.ProcedureOrMedicineService;
 import com.tsystems.javaschool.service.user.UserService;
 import com.tsystems.javaschool.util.exception.NotFoundException;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +62,7 @@ public class PrescriptionEventFacade {
         prescription.setPatient(patientService.get(patientId));
         List<Event> events = eventService.getByPrescriptionId(prescription.getId());
         Iterator<Event> iterator = events.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Event event = iterator.next();
             if (event.getEventStatus().toString().equals("STATUS_PLANNED")) {
                 eventService.delete(event.getId());
@@ -90,7 +89,7 @@ public class PrescriptionEventFacade {
         Patient patient = patientService.get(id);
         patient.setIll(false);
         for (Prescription prescription : patient.getPrescriptions()) {
-            if(prescription.isActive()) {
+            if (prescription.isActive()) {
                 deletePrescription(prescription.getId(), patient.getId());
             }
         }

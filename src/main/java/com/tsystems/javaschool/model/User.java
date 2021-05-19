@@ -3,7 +3,6 @@ package com.tsystems.javaschool.model;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.Name;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,7 +42,8 @@ public class User extends AbstractBaseEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
     private List<Patient> patients;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String email, String password, String name, Role role) {
         this.email = email;

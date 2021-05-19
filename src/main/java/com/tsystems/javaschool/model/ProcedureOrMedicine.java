@@ -13,7 +13,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "proc_or_meds")
-public class ProcedureOrMedicine extends AbstractBaseEntity{
+public class ProcedureOrMedicine extends AbstractBaseEntity {
 
     public static final String ALL = "ProcedureOrMedicine.getAll";
     public static final String BY_NAME_AND_TYPE = "ProcedureOrMedicine.getByNameAndType";
@@ -28,7 +28,8 @@ public class ProcedureOrMedicine extends AbstractBaseEntity{
     @NotNull
     private PrescriptionType prescriptionType;
 
-    public ProcedureOrMedicine() {}
+    public ProcedureOrMedicine() {
+    }
 
     public ProcedureOrMedicine(String name, PrescriptionType prescriptionType) {
         this.name = name;
