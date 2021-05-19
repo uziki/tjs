@@ -27,8 +27,8 @@
             <dl>
                 <c:if test="${patient.ill == false}">
                     <select name="isill">
-                        <option value="${true}" selected>Болен</option>
-                        <option value="${false}">Здоров</option>
+                        <option value="${true}" selected>Is ill</option>
+                        <option value="${false}">Is healthy</option>
                     </select>
                 </c:if>
             </dl>

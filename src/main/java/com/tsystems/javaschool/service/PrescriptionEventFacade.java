@@ -78,7 +78,7 @@ public class PrescriptionEventFacade {
         for (Event event : prescription.getEventList()) {
             if (event.getEventStatus() == EventStatus.STATUS_PLANNED) {
                 event.setEventStatus(EventStatus.STATUS_CANCELED);
-                event.setMessage("Отменено врачом " + userService.get(authUserId()).getName());
+                event.setMessage("Canceled by doctor " + userService.get(authUserId()).getName());
                 eventService.update(event);
             }
         }
@@ -93,7 +93,7 @@ public class PrescriptionEventFacade {
                 deletePrescription(prescription.getId(), patient.getId());
             }
         }
-        patient.setDiagnosis("Здоров");
+        patient.setDiagnosis("Healthy");
         patientService.update(patient, patient.getDoctor().getId());
     }
 

@@ -33,6 +33,6 @@ VALUES ('1-10:10 2- 3-20:20', '5', 2, 4, 7, 1),
        ('1- 2-10:00 3- 4-15:15 5- 6- 7-', '3', 0, 6, 9, 3);
 
 INSERT INTO events(patient_id, date_time, proc_or_meds_id, prescription_id, dose, status, message)
-VALUES (4, '2020-05-18 16:00', 7, 10, 2, 'STATUS_PLANNED', ''),
-       (6, '2020-05-19 09:00', 9, 13, 0, 'STATUS_DONE', ''),
+VALUES (4, '2020-05-19 16:20', 7, 10, 2, 'STATUS_PLANNED', ''),
+       (6, '2020-05-19 19:00', 9, 13, 0, 'STATUS_DONE', ''),
        (5, '2020-05-21 08:00', 8, 11, 0, 'STATUS_CANCELED', 'Didnt want to')
