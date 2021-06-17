@@ -77,13 +77,13 @@
                     <td class="text-center">
                         <c:choose>
                             <c:when test="${status == 'STATUS_PLANNED'}">
-                                Запланировано
+                                Planned
                             </c:when>
                             <c:when test="${status == 'STATUS_DONE'}">
-                                Выполнено
+                                Done
                             </c:when>
                             <c:otherwise>
-                                Отменено
+                                Canceled
                             </c:otherwise>
                         </c:choose>
                     </td>

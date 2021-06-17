@@ -8,7 +8,7 @@
 <body class="text-center">
 <nav class="navbar navbar-dark bg-dark py-0">
     <div class="container">
-        <div class="navbar-brand"><img src="resources/images/hospital1.png">Больница</div>
+        <div class="navbar-brand"><img src="resources/images/hospital1.png">Hospital</div>
         <form class="form-inline my-2" id="login_form" action="spring_security_check" method="post">
             <div class="input-group-text">
                 <input class="form-control mr-1" type="text" placeholder="Email" name="username">
@@ -21,11 +21,11 @@
         </form>
     </div>
 </nav>
-<h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+<h1 class="h3 mb-3 fw-normal">Registration</h1>
 <div class="container">
     <form method="post" action="register">
         <dl>
-            <dt>Имя:</dt>
+            <dt>Name:</dt>
             <dd><input type="text" placeholder="Name" name="name" required></dd>
         </dl>
         <dl>
@@ -33,13 +33,13 @@
             <dd><input type="email" placeholder="Email" name="email" required></dd>
         </dl>
         <dl>
-            <dt>Пароль:</dt>
+            <dt>Password:</dt>
             <dd><input type="text" placeholder="Password" name="password" required></dd>
         </dl>
         <dl>
             <select name="role">
-                <option value="DOCTOR" selected>Врач</option>
-                <option value="NURSE">Медсестра</option>
+                <option value="DOCTOR" selected>Doctor</option>
+                <option value="NURSE">Nurse</option>
             </select>
         </dl>
         <c:if test="${not empty param.message}">
