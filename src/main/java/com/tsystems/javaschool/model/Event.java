@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
         @NamedQuery(name = Event.GET_BY_PRESCRIPTION, query = "SELECT e FROM Event e WHERE e.prescription.id=:prescriptionId"),
         @NamedQuery(name = Event.GET_BETWEEN_DATE, query = "SELECT e FROM Event e WHERE e.dateTime >= :startDateTime " +
                 "AND e.dateTime <= :endDateTime AND e.eventStatus='STATUS_PLANNED' ORDER BY e.dateTime ASC"),
-        @NamedQuery(name = Event.FIND_BY_NAME, query = "SELECT e FROM Event e WHERE e.patient.name LIKE :name")
+        @NamedQuery(name = Event.FIND_BY_NAME, query = "SELECT e FROM Event e WHERE e.patient.name LIKE :name"),
+        @NamedQuery(name = Event.FIND_BY_TODAY, query = "SELECT e FROM Event e WHERE e.eventStatus='STATUS_PLANNED' AND " +
+                "e.dateTime < :tomorrowDate ORDER BY e.dateTime ASC")
 })
 @Entity
 @Table(name = "events")
@@ -24,6 +26,7 @@ public class Event extends AbstractBaseEntity {
     public static final String GET_BY_PRESCRIPTION = "Event.getByPrescription";
     public static final String GET_BETWEEN_DATE = "Event.getForToday";
     public static final String FIND_BY_NAME = "Event.findByName";
+    public static final String FIND_BY_TODAY = "Event.findByToday";
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)

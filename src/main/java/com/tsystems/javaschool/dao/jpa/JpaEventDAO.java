@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -61,6 +62,13 @@ public class JpaEventDAO implements EventDAO {
     public List<Event> findByName(String name) {
         return em.createNamedQuery(Event.FIND_BY_NAME, Event.class)
                 .setParameter("name", name)
+                .getResultList();
+    }
+
+    @Override
+    public List<Event> findByToday() {
+        return em.createNamedQuery(Event.FIND_BY_TODAY, Event.class)
+                .setParameter("todayDate", LocalDate.now().plusDays(1).atStartOfDay())
                 .getResultList();
     }
 }

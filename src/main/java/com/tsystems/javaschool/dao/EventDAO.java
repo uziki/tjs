@@ -19,4 +19,6 @@ public interface EventDAO {
     List<Event> getBetweenDates(LocalDateTime startLdt, LocalDateTime endLdt);
 
     List<Event> findByName(String name);
+
+    List<Event> findByToday();
 }
