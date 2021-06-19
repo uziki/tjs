@@ -8,11 +8,5 @@ import java.util.List;
 public interface UserService {
     User get(int id) throws NotFoundException;
 
-    void delete(int id) throws NotFoundException;
-
-    List<User> getAll();
-
-    void update(User event) throws NotFoundException;
-
     User create(User user);
 }

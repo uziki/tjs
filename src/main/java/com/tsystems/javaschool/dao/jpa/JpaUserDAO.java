@@ -35,16 +35,4 @@ public class JpaUserDAO implements UserDAO {
                 .setParameter("email", email)
                 .getSingleResult();
     }
-
-    @Override
-    public List<User> getAll() {
-        return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return em.createNamedQuery(User.DELETE)
-                .setParameter("id", id)
-                .executeUpdate() != 0;
-    }
 }

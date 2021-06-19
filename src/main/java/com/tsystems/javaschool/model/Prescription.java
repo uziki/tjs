@@ -12,10 +12,8 @@ import static com.tsystems.javaschool.util.DateTimeUtil.DAYS;
 
 
 @NamedQueries({
-        @NamedQuery(name = Prescription.DELETE, query = "DELETE FROM Prescription p WHERE p.id=:id"),
         @NamedQuery(name = Prescription.ALL_WITH_ID, query = "SELECT p FROM Prescription p " +
                 "WHERE p.patient.id=:patientId ORDER BY p.active DESC"),
-        @NamedQuery(name = Prescription.ALL, query = "SELECT p FROM Prescription p ORDER BY p.active"),
         @NamedQuery(name = Prescription.GET_WITH_ID, query = "SELECT p FROM Prescription p " +
                 "WHERE p.id=:id AND p.patient.id=:patientId")
 })
@@ -23,9 +21,7 @@ import static com.tsystems.javaschool.util.DateTimeUtil.DAYS;
 @Table(name = "prescriptions")
 public class Prescription extends AbstractBaseEntity {
 
-    public static final String DELETE = "Prescription.delete";
     public static final String ALL_WITH_ID = "Prescriptions.getAllWithId";
-    public static final String ALL = "Prescription.getAll";
     public static final String GET_WITH_ID = "Prescription.getWithId";
 
     private static final String SPACE = " ";

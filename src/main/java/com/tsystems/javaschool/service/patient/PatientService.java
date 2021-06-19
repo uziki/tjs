@@ -8,8 +8,6 @@ import java.util.List;
 public interface PatientService {
     Patient get(int id) throws NotFoundException;
 
-    void delete(int id) throws NotFoundException;
-
     List<Patient> getAll();
 
     void update(Patient patient, int doctorId) throws NotFoundException;

@@ -26,28 +26,11 @@ public class JpaProcedureOrMedicineDAO implements ProcedureOrMedicineDAO {
     }
 
     @Override
-    public ProcedureOrMedicine get(int id) {
-        return em.find(ProcedureOrMedicine.class, id);
-    }
-
-    @Override
-    public List<ProcedureOrMedicine> getAll() {
-        return em.createNamedQuery(ProcedureOrMedicine.ALL, ProcedureOrMedicine.class).getResultList();
-    }
-
-    @Override
     public ProcedureOrMedicine getByNameAndType(String name, String type) {
         return em.createNamedQuery(ProcedureOrMedicine.BY_NAME_AND_TYPE, ProcedureOrMedicine.class)
                 .setParameter("name", name)
                 .setParameter("type", PrescriptionType.valueOf(type))
                 .getSingleResult();
 
-    }
-
-    @Override
-    public boolean delete(int id) {
-        return em.createNamedQuery(ProcedureOrMedicine.DELETE)
-                .setParameter("id", id)
-                .executeUpdate() != 0;
     }
 }

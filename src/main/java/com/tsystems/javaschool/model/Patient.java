@@ -7,14 +7,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Patient.DELETE, query = "DELETE FROM Patient p WHERE p.id=:id"),
         @NamedQuery(name = Patient.ALL_SORTED, query = "SELECT p FROM Patient p ORDER BY p.name")
 })
 @Entity
 @Table(name = "patients")
 public class Patient extends AbstractBaseEntity {
 
-    public static final String DELETE = "Patient.delete";
     public static final String ALL_SORTED = "Patient.getAllSorted";
 
     @NotBlank

@@ -27,13 +27,6 @@ public class JpaPatientDAO implements PatientDAO {
     }
 
     @Override
-    public boolean delete(int id) {
-        return em.createNamedQuery(Patient.DELETE)
-                .setParameter("id", id)
-                .executeUpdate() != 0;
-    }
-
-    @Override
     public Patient get(int id) {
         return em.find(Patient.class, id);
     }

@@ -33,18 +33,6 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    @Transactional
-    public void delete(int id) throws NotFoundException {
-        Prescription prescription = get(id);
-        prescription.setActive(false);
-    }
-
-    @Override
-    public List<Prescription> getAll() {
-        return dao.getAll();
-    }
-
-    @Override
     public List<Prescription> getAllWithId(int patientId) {
         return dao.getAllWithId(patientId);
     }

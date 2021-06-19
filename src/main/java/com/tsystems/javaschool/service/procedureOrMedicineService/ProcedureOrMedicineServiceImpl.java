@@ -25,28 +25,8 @@ public class ProcedureOrMedicineServiceImpl implements ProcedureOrMedicineServic
         this.dao = dao;
     }
 
-    @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(dao.delete(id), id);
-    }
-
-    @Override
-    public ProcedureOrMedicine get(int id) throws NotFoundException {
-        return checkNotFoundWithId(dao.get(id), id);
-    }
-
-    @Override
-    public List<ProcedureOrMedicine> getAll() {
-        return dao.getAll();
-    }
-
     public ProcedureOrMedicine getByNameAndType(String name, String type) {
         return dao.getByNameAndType(name, type);
-    }
-
-    @Override
-    public void update(ProcedureOrMedicine pom) throws NotFoundException {
-        checkNotFoundWithId(dao.save(pom), pom.getId());
     }
 
     @Override

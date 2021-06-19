@@ -45,21 +45,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return checkNotFoundWithId(dao.get(id), id);
     }
 
-    @Override
-    public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(dao.delete(id), id);
-    }
-
-    @Override
-    public List<User> getAll() {
-        return dao.getAll();
-    }
-
-    @Override
-    public void update(User user) throws NotFoundException {
-        checkNotFoundWithId(dao.save(prepareAndSave(user)), user.getId());
-    }
-
     private User prepareAndSave(User user) {
         return dao.save(prepareToSave(user, passwordEncoder));
     }

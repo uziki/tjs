@@ -6,18 +6,13 @@ import jakarta.validation.constraints.NotNull;
 import javax.persistence.*;
 
 @NamedQueries({
-        @NamedQuery(name = ProcedureOrMedicine.ALL, query = "SELECT p FROM ProcedureOrMedicine p"),
-        @NamedQuery(name = ProcedureOrMedicine.BY_NAME_AND_TYPE, query = "SELECT p FROM ProcedureOrMedicine p WHERE p.name=:name AND p.prescriptionType=:type"),
-        @NamedQuery(name = ProcedureOrMedicine.DELETE, query = "DELETE FROM ProcedureOrMedicine p WHERE p.id=:id")
+        @NamedQuery(name = ProcedureOrMedicine.BY_NAME_AND_TYPE, query = "SELECT p FROM ProcedureOrMedicine p WHERE p.name=:name AND p.prescriptionType=:type")
 })
 
 @Entity
 @Table(name = "proc_or_meds")
 public class ProcedureOrMedicine extends AbstractBaseEntity {
-
-    public static final String ALL = "ProcedureOrMedicine.getAll";
     public static final String BY_NAME_AND_TYPE = "ProcedureOrMedicine.getByNameAndType";
-    public static final String DELETE = "ProcedureOrMedicine.delete";
 
     @NotBlank
     @Column(name = "name", nullable = false)
