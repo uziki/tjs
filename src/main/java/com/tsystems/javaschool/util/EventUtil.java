@@ -20,7 +20,7 @@ public class EventUtil {
         eventTo.setTime(event.getDateTime().format(DateTimeUtil.TIME_FORMATTER));
         eventTo.setPatient(event.getPatient().getName());
         eventTo.setEventPrescription(event.getPrescription().getProcedureOrMedicine().getName() +
-                (event.getDose() > 0 ? event.getDose() + " pcs" : ""));
+                (event.getDose() > 0 ? " " + event.getDose() + " pcs" : ""));
         return eventTo;
     }
 }

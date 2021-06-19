@@ -16,7 +16,7 @@
                 <button class="btn btn-success" type="submit">
                     <span class="fa fa-sign-in"></span>
                 </button>
-                <a class ="btn btn-warning" href="register" role="button"><span class="fa fa-user-plus"></span></a>
+                <a class="btn btn-warning" href="register" role="button"><span class="fa fa-user-plus"></span></a>
             </div>
         </form>
     </div>
@@ -42,8 +42,8 @@
                 <option value="NURSE">Nurse</option>
             </select>
         </dl>
-        <c:if test="${not empty param.message}">
-            <div class="message">Пользователь с таким email уже существует!</div>
+        <c:if test="${param.message == 'not_uniq_email'}">
+            <div class="message">User with this email already exists!</div>
         </c:if>
         <button type="submit" class="btn btn-success"><span class="fa fa-check fa-2x"></span></button>
         <button onclick="window.history.back()" class="btn btn-danger"><span class="fa fa-times fa-2x"></span></button>
