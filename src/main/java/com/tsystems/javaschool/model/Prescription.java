@@ -64,6 +64,11 @@ public class Prescription extends AbstractBaseEntity {
     }
 
     public Prescription(Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine) {
+        this(null, patient, doctor, timePattern, timePeriod, procedureOrMedicine);
+    }
+
+    public Prescription(Integer id, Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine) {
+        super(id);
         this.patient = patient;
         this.doctor = doctor;
         this.timePattern = timePattern;
@@ -71,7 +76,13 @@ public class Prescription extends AbstractBaseEntity {
         this.procedureOrMedicine = procedureOrMedicine;
     }
 
+
     public Prescription(Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine, int dose) {
+        this(null, patient, doctor, timePattern, timePeriod, procedureOrMedicine, dose);
+    }
+
+    public Prescription(Integer id, Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine, int dose) {
+        super(id);
         this.patient = patient;
         this.doctor = doctor;
         this.timePattern = timePattern;

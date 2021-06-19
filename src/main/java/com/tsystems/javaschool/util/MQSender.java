@@ -1,5 +1,7 @@
 package com.tsystems.javaschool.util;
 
+import com.tsystems.javaschool.util.exception.NoConnectionToMQException;
+
 import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -43,7 +45,7 @@ public class MQSender {
             session.close();
             connection.close();
         } catch (NamingException | JMSException e) {
-            e.printStackTrace();
+            throw new NoConnectionToMQException("No connection to MQ");
         }
     }
 }

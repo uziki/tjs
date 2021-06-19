@@ -6,6 +6,7 @@ import com.tsystems.javaschool.model.ProcedureOrMedicine;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class JpaProcedureOrMedicineDAO implements ProcedureOrMedicineDAO {
     }
 
     @Override
-    public ProcedureOrMedicine getByNameAndType(String name, String type) {
+    public ProcedureOrMedicine getByNameAndType(String name, String type) throws NoResultException {
         return em.createNamedQuery(ProcedureOrMedicine.BY_NAME_AND_TYPE, ProcedureOrMedicine.class)
                 .setParameter("name", name)
                 .setParameter("type", PrescriptionType.valueOf(type))

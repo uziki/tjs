@@ -27,9 +27,15 @@ public class ProcedureOrMedicine extends AbstractBaseEntity {
     }
 
     public ProcedureOrMedicine(String name, PrescriptionType prescriptionType) {
+        this(null, name, prescriptionType);
+    }
+
+    public ProcedureOrMedicine(Integer id, String name, PrescriptionType prescriptionType) {
+        super(id);
         this.name = name;
         this.prescriptionType = prescriptionType;
     }
+
 
     public String getName() {
         return name;

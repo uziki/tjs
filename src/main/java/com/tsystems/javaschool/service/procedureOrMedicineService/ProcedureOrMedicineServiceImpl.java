@@ -25,7 +25,7 @@ public class ProcedureOrMedicineServiceImpl implements ProcedureOrMedicineServic
         this.dao = dao;
     }
 
-    public ProcedureOrMedicine getByNameAndType(String name, String type) {
+    public ProcedureOrMedicine getByNameAndType(String name, String type) throws NoResultException {
         return dao.getByNameAndType(name, type);
     }
 
