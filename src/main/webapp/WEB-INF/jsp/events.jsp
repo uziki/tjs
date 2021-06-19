@@ -73,7 +73,7 @@
                     <td>${fn:formatDateTime(event.dateTime)}</td>
                     <td>${event.patient.name}</td>
                     <td class="text-center">${event.procedureOrMedicine.name} <c:if
-                            test="${event.dose > 0}"> ${event.dose} шт </c:if></td>
+                            test="${event.dose > 0}"> ${event.dose} pcs </c:if></td>
                     <td class="text-center">
                         <c:choose>
                             <c:when test="${status == 'STATUS_PLANNED'}">

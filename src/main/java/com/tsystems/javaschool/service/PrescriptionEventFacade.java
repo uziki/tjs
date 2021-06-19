@@ -7,17 +7,20 @@ import com.tsystems.javaschool.service.patient.PatientService;
 import com.tsystems.javaschool.service.prescription.PrescriptionService;
 import com.tsystems.javaschool.service.procedureOrMedicineService.ProcedureOrMedicineService;
 import com.tsystems.javaschool.service.user.UserService;
+import com.tsystems.javaschool.util.MQSender;
 import com.tsystems.javaschool.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.tsystems.javaschool.util.DateTimeUtil.DAYS_BEFORE_TOMORROW;
 import static com.tsystems.javaschool.util.DateTimeUtil.timePatternToDates;
 import static com.tsystems.javaschool.web.SecurityUtil.authUserId;
 
@@ -62,12 +65,17 @@ public class PrescriptionEventFacade {
         prescription.setPatient(patientService.get(patientId));
         List<Event> events = eventService.getByPrescriptionId(prescription.getId());
         Iterator<Event> iterator = events.iterator();
+        boolean isTodayEvent = false;
         while (iterator.hasNext()) {
             Event event = iterator.next();
             if (event.getEventStatus().toString().equals("STATUS_PLANNED")) {
                 eventService.delete(event.getId());
+                if (event.getDateTime().isBefore(LocalDate.now().plusDays(DAYS_BEFORE_TOMORROW).atStartOfDay())) {
+                    isTodayEvent = true;
+                }
             }
         }
+        if (isTodayEvent) MQSender.sendMessage();
         prescription.setEventList(createEvents(prescription, events));
         prescriptionService.update(prescription);
     }
@@ -75,13 +83,17 @@ public class PrescriptionEventFacade {
     public void deletePrescription(int id, int patientId) throws NotFoundException, NoResultException {
         Prescription prescription = prescriptionService.getWithId(id, patientId);
         prescription.setActive(false);
+        boolean isTodayEvent = false;
         for (Event event : prescription.getEventList()) {
             if (event.getEventStatus() == EventStatus.STATUS_PLANNED) {
                 event.setEventStatus(EventStatus.STATUS_CANCELED);
                 event.setMessage("Canceled by doctor " + userService.get(authUserId()).getName());
                 eventService.update(event);
+                if (event.getDateTime().isBefore(LocalDate.now().plusDays(DAYS_BEFORE_TOMORROW).atStartOfDay()))
+                    isTodayEvent = true;
             }
         }
+        if (isTodayEvent) MQSender.sendMessage();
         prescriptionService.update(prescription);
     }
 
@@ -100,11 +112,14 @@ public class PrescriptionEventFacade {
     public List<Event> createEvents(Prescription prescription, List<Event> events) {
         List<LocalDateTime> ldts = timePatternToDates(prescription.getTimePattern(), prescription.getTimePeriod(),
                 prescription.getProcedureOrMedicine().getPrescriptionType());
+        boolean isTodayEvent = false;
         for (LocalDateTime ldt : ldts) {
             Event event = new Event(prescription, ldt);
             eventService.create(event);
             events.add(event);
+            if (ldt.isBefore(LocalDate.now().plusDays(DAYS_BEFORE_TOMORROW).atStartOfDay())) isTodayEvent = true;
         }
+        if (isTodayEvent) MQSender.sendMessage();
         return events;
     }
 }

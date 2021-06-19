@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.tsystems.javaschool.util.DateTimeUtil.DAYS_BEFORE_TOMORROW;
+
 @Repository
 public class JpaEventDAO implements EventDAO {
 
@@ -68,7 +70,7 @@ public class JpaEventDAO implements EventDAO {
     @Override
     public List<Event> findByToday() {
         return em.createNamedQuery(Event.FIND_BY_TODAY, Event.class)
-                .setParameter("todayDate", LocalDate.now().plusDays(1).atStartOfDay())
+                .setParameter("tomorrowDate", LocalDate.now().plusDays(DAYS_BEFORE_TOMORROW).atStartOfDay())
                 .getResultList();
     }
 }

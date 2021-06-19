@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DateTimeUtil {
+    public static final int DAYS_BEFORE_TOMORROW = 2;
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
     private static final String SPACE = " ";
     private static final String COLON = ":";

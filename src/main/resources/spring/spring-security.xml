@@ -13,6 +13,7 @@
         <intercept-url pattern="/register" access="isAnonymous()"/>
         <intercept-url pattern="/login" access="isAnonymous()"/>
         <intercept-url pattern="/patients/**" access="hasRole('DOCTOR')"/>
+        <intercept-url pattern="/events/today" access="isAnonymous()"/>
         <intercept-url pattern="/events/**" access="hasRole('NURSE')"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <form-login login-page="/login" default-target-url="/"

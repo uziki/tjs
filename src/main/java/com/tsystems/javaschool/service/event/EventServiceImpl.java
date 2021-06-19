@@ -2,6 +2,9 @@ package com.tsystems.javaschool.service.event;
 
 import com.tsystems.javaschool.dao.EventDAO;
 import com.tsystems.javaschool.model.Event;
+import com.tsystems.javaschool.to.EventTo;
+import com.tsystems.javaschool.util.EventUtil;
+import com.tsystems.javaschool.util.MQSender;
 import com.tsystems.javaschool.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void update(Event event) throws NotFoundException {
+        notifyMQ();
         checkNotFoundWithId(dao.save(event), event.getId());
     }
 
@@ -74,5 +78,15 @@ public class EventServiceImpl implements EventService {
             return null;
         }
         return events;
+    }
+
+    @Override
+    public List<EventTo> findByToday() {
+        return EventUtil.getTos(dao.findByToday());
+    }
+
+    @Override
+    public void notifyMQ() {
+        MQSender.sendMessage();
     }
 }
