@@ -41,6 +41,11 @@ public class Patient extends AbstractBaseEntity {
     public Patient() {
     }
 
+    public Patient(Patient p) {
+        this(p.getId(), p.getName(), p.getDiagnosis(), p.getInsuranceNumber(), p.isIll(), p.getDoctor());
+        this.prescriptions = p.getPrescriptions();
+    }
+
     public Patient(String name, String diagnosis, String insuranceNumber, boolean ill) {
         this(null, name, diagnosis, insuranceNumber, ill, null);
     }

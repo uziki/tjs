@@ -63,6 +63,18 @@ public class Prescription extends AbstractBaseEntity {
     public Prescription() {
     }
 
+    public Prescription(Prescription p) {
+        this.id = p.getId();
+        this.patient = p.getPatient();
+        this.doctor = p.getDoctor();
+        this.timePattern = p.getTimePattern();
+        this.timePeriod = p.getTimePeriod();
+        this. procedureOrMedicine = p.getProcedureOrMedicine();
+        this.eventList = p.getEventList();
+        this.dose = p.getDose();
+        this.active = p.isActive();
+    }
+
     public Prescription(Patient patient, User doctor, String timePattern, int timePeriod, ProcedureOrMedicine procedureOrMedicine) {
         this(null, patient, doctor, timePattern, timePeriod, procedureOrMedicine);
     }

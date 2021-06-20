@@ -50,7 +50,7 @@ public class Event extends AbstractBaseEntity {
     private ProcedureOrMedicine procedureOrMedicine;
 
     @Column(name = "message")
-    private String message;
+    private String message = "";
 
     @Column(name = "dose", nullable = false)
     private int dose;
@@ -64,6 +64,17 @@ public class Event extends AbstractBaseEntity {
     public Event() {
     }
 
+    public Event(Event e) {
+        this.id = e.getId();
+        this.prescription = e.getPrescription();
+        this.patient = e.getPatient();
+        this.dateTime = e.getDateTime();
+        this.eventStatus = e.getEventStatus();
+        this.procedureOrMedicine = e.getProcedureOrMedicine();
+        this.message = e.getMessage();
+        this.dose = e.getDose();
+    }
+
     public Event(Prescription prescription, LocalDateTime localDateTime) {
         this.prescription = prescription;
         this.patient = prescription.getPatient();
@@ -73,7 +84,21 @@ public class Event extends AbstractBaseEntity {
         this.dose = prescription.getDose();
     }
 
+    public Event(Integer id, Patient patient, LocalDateTime dateTime, ProcedureOrMedicine pom, int dose) {
+        super(id);
+        this.patient = patient;
+        this.dateTime = dateTime;
+        this.eventStatus = EventStatus.STATUS_PLANNED;
+        this.procedureOrMedicine = pom;
+        this.dose = dose;
+    }
+
     public Event(Patient patient, LocalDateTime dateTime, String procedureOrMedicineName, PrescriptionType type, int dose) {
+        this(null, patient, dateTime, procedureOrMedicineName, type, dose);
+    }
+
+    public Event(Integer id, Patient patient, LocalDateTime dateTime, String procedureOrMedicineName, PrescriptionType type, int dose) {
+        super(id);
         this.patient = patient;
         this.dateTime = dateTime;
         this.eventStatus = EventStatus.STATUS_PLANNED;

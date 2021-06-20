@@ -43,7 +43,7 @@ public class ProcedureOrMedicineServiceImplTest {
         ProcedureOrMedicine expected = new ProcedureOrMedicine();
         expected.setName("Aspirin");
         expected.setPrescriptionType(PrescriptionType.TYPE_MEDICINE);
-        ProcedureOrMedicine actual = service.create(expected);//assertEquals(expected, actual);
+        ProcedureOrMedicine actual = service.create(expected);
         assertMatch(expected, actual);
     }
 

@@ -9,9 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import static com.tsystems.javaschool.model.AbstractBaseEntity.START_SEQ;
 import static com.tsystems.javaschool.service.TestData.*;
 
 @ContextConfiguration({
@@ -24,10 +22,9 @@ public class UserServiceImplTest {
 
     @Test
     public void get() {
-        User actual = service.get(START_ID);
-        User expected = user1;
-        user1.setPatients(Arrays.asList(patient1, patient2, patient3));
-        assertMatchUsers(expected, actual);
+        User actual = service.get(START_SEQ);
+        User expected = getExpectedUser1();
+        assertMatch(expected, actual);
     }
 
     @Test
@@ -35,6 +32,6 @@ public class UserServiceImplTest {
         User newUser = getNewUser();
         User actual = service.create(newUser);
         newUser.setId(actual.getId());
-        assertMatchUsers(newUser, actual);
+        assertMatch(newUser, actual);
     }
 }

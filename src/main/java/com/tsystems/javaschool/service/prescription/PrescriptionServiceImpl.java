@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 import static com.tsystems.javaschool.util.ValidationUtil.checkNotFoundWithId;
@@ -28,7 +29,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
     }
 
     @Override
-    public Prescription getWithId(int id, int patientId) throws NotFoundException {
+    public Prescription getWithId(int id, int patientId) throws NoResultException {
         return checkNotFoundWithId(dao.getWithId(id, patientId), id);
     }
 
