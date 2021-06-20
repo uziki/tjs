@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.NoResultException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,8 +21,10 @@ import java.util.List;
 
 import static com.tsystems.javaschool.util.DateTimeUtil.DAYS_BEFORE_TOMORROW;
 import static com.tsystems.javaschool.util.DateTimeUtil.timePatternToDates;
-import static com.tsystems.javaschool.web.SecurityUtil.authUserId;
 
+/**
+ * Prescription & event facade service for operations with different entity types
+ */
 @Service
 @Transactional
 public class PrescriptionEventFacade {
@@ -46,6 +47,16 @@ public class PrescriptionEventFacade {
         this.userService = userService;
     }
 
+    /**
+     * Creates prescription and relevant events
+     *
+     * @param prescription needed to be created
+     * @param patientId    of relevant Patient
+     * @param doctorId     Doctor, who made prescription
+     * @param pomName      ProcedureOrMedicine name
+     * @param pomType      ProcedureOrMedicine type
+     * @return saved Prescription
+     */
     public Prescription createPrescription(Prescription prescription, int patientId, int doctorId,
                                            String pomName, String pomType) {
         ProcedureOrMedicine pom = pomService.createWithNameAndType(pomName, pomType);
@@ -59,6 +70,15 @@ public class PrescriptionEventFacade {
         return prescription;
     }
 
+    /**
+     * Updates prescription and relevant events. Send message to MQ if at least one updated event has today's date
+     *
+     * @param prescription needed to be created
+     * @param patientId    of relevant Patient
+     * @param doctorId     Doctor, who made prescription
+     * @param pomName      ProcedureOrMedicine name
+     * @param pomType      ProcedureOrMedicine type
+     */
     public void updatePrescription(Prescription prescription, int patientId, int doctorId,
                                    String pomName, String pomType) {
         ProcedureOrMedicine pom = pomService.createWithNameAndType(pomName, pomType);
@@ -82,7 +102,15 @@ public class PrescriptionEventFacade {
         prescriptionService.update(prescription);
     }
 
-    public void deletePrescription(int id, int patientId) throws NotFoundException, NoResultException {
+    /**
+     * Cancels specified prescription and cancels all undone relevant events. Send message to MQ
+     * if at least one canceled event had today's date
+     *
+     * @param id        of prescription to be canceled
+     * @param patientId of relevant Patient
+     * @throws NotFoundException if not found such prescription
+     */
+    public void deletePrescription(int id, int patientId) throws NotFoundException {
         Prescription prescription = prescriptionService.getWithId(id, patientId);
         prescription.setActive(false);
         boolean isTodayEvent = false;
@@ -99,6 +127,12 @@ public class PrescriptionEventFacade {
         prescriptionService.update(prescription);
     }
 
+    /**
+     * Discharges patient. Cancels all his prescriptions and relevant events
+     *
+     * @param id of patient to be discharge
+     * @throws NotFoundException if not found
+     */
     public void deletePatient(int id) throws NotFoundException {
         Patient patient = patientService.get(id);
         patient.setIll(false);
@@ -111,6 +145,14 @@ public class PrescriptionEventFacade {
         patientService.update(patient, patient.getDoctor().getId());
     }
 
+    /**
+     * Creates or updates events according to specified prescription. Send message to MQ if
+     * at least one created or updated event has today's date
+     *
+     * @param prescription to create events
+     * @param events       list of events to be filled/updated
+     * @return Events
+     */
     public List<Event> createEvents(Prescription prescription, List<Event> events) {
         List<LocalDateTime> ldts = timePatternToDates(prescription.getTimePattern(), prescription.getTimePeriod(),
                 prescription.getProcedureOrMedicine().getPrescriptionType());
