@@ -10,13 +10,12 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.NoResultException;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.tsystems.javaschool.model.AbstractBaseEntity.START_SEQ;
 import static com.tsystems.javaschool.service.TestData.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThrows;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
@@ -42,25 +41,30 @@ public class PrescriptionServiceImplTest {
 
     @Test
     public void getWithIdNotFound() {
-        assertThrows(NoResultException.class, ()-> service.getWithId(START_SEQ + 7, START_SEQ + 300));
+        assertThrows(NoResultException.class, () -> service.getWithId(START_SEQ + 7, START_SEQ + 300));
     }
 
     @Test
     public void getAllWithId() {
-        List<Prescription> actual = service.getAllWithId(START_SEQ + 3);
-        assertMatchLists(actual, getExpectedPrescription1());
+        List<Prescription> actual = service.getAllWithId(START_SEQ + 4);
+        assertMatchLists(actual, getExpectedPrescription2());
     }
 
     @Test
     public void getAllWithIdNotFound() {
-        assertThrows(NoResultException.class, ()-> service.getAllWithId(START_SEQ + 3));
+        List<Prescription> actual = service.getAllWithId(START_SEQ + 300);
+        assertMatch(new ArrayList<>(), actual);
     }
 
     @Test
     public void update() {
+
     }
 
     @Test
     public void create() {
+        Prescription expected = getNewPrescription();
+        Prescription actual = service.create(expected);
+        assertMatch(expected, actual);
     }
 }

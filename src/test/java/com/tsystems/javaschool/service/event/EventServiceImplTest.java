@@ -115,7 +115,7 @@ public class EventServiceImplTest {
         assertMatch(new ArrayList<>(), actual);
     }
 
-    /*@Test
+    @Test
     public void notifyMQ() {
         String actual = "";
         service.notifyMQ();
@@ -146,5 +146,5 @@ public class EventServiceImplTest {
             System.out.println("No connection to MQ");
         }
         assertMatch(MQ_MESSAGE, actual);
-    }*/
+    }
 }

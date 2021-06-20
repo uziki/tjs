@@ -12,22 +12,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestData {
     public static final User user1 = new User(START_SEQ, "doctor@gmail.com", "{noop}doctor", "doctor1", Role.DOCTOR);
-    public static final User user2 = new User(START_SEQ + 1, "doctor2@gmail.com", "{noop}doctor", "doctor2", Role.DOCTOR);
-    public static final User user3 = new User(START_SEQ + 2, "nurse@gmail.com", "{noop}nurse", "nurse", Role.NURSE);
+    public static final User user2 = new User(START_SEQ + 1, "doctor2@gmail.com", "{noop}doctor", "doctor2", Role.DOCTOR);public static final User user3 = new User(START_SEQ + 2, "nurse@gmail.com", "{noop}nurse", "nurse", Role.NURSE);
     public static final Patient patient1 = new Patient(START_SEQ + 3, "Иванов Иван", "Broken leg", "1111", true, user1);
     public static final Patient patient2 = new Patient(START_SEQ + 4, "Петров Петр", "Cold", "2222", true, user2);
     public static final ProcedureOrMedicine pom1 = new ProcedureOrMedicine(START_SEQ + 5, "Aspirin", PrescriptionType.TYPE_MEDICINE);
     public static final ProcedureOrMedicine pom2 = new ProcedureOrMedicine(START_SEQ + 6, "Massage", PrescriptionType.TYPE_PROCEDURE);
     public static final Prescription prescription1 = new Prescription(START_SEQ + 7, patient1, user1, "1-10:50 2- 3-", 1, pom1, 2);
     public static final Prescription prescription2 = new Prescription(START_SEQ + 8, patient2, user2, "1- 2- 3- 4-10:37 5- 6- 7-", 1, pom2, 0);
-    private static final Event event1 = new Event(START_SEQ + 9, patient1, LocalDateTime.of(2020, 06, 21, 10, 50, 00), pom1, 2);
-    private static final Event event2 = new Event(START_SEQ + 10, patient2, LocalDateTime.of(2020, 06, 24, 10, 37, 00), pom2, 0);
+    public static final Event event1 = new Event(START_SEQ + 9, patient1, LocalDateTime.of(2020, 06, 21, 10, 50, 00), pom1, 2);
+    public static final Event event2 = new Event(START_SEQ + 10, patient2, LocalDateTime.of(2020, 06, 24, 10, 37, 00), pom2, 0);
 
+
+    public static final String HEALTHY = "Healthy";
+    public static final String CANCELED_BY_DOCTOR = "Canceled by doctor";
 
     public static User getExpectedUser1() {
         User user = user1;
         Patient patient = patient1;
-        patient.setPrescriptions(Arrays.asList(getExpectedPrescription1()));
+        Prescription prescription = prescription1;
+        prescription.setActive(true);
+        Event event = event1;
+        event.setPrescription(prescription);
+        prescription.setEventList(Arrays.asList(event));
+        patient.setPrescriptions(Arrays.asList(prescription));
         user.setPatients(Arrays.asList(patient));
         return user;
     }
@@ -35,7 +42,12 @@ public class TestData {
     public static User getExpectedUser2() {
         User user = user2;
         Patient patient = patient2;
-        patient.setPrescriptions(Arrays.asList(getExpectedPrescription2()));
+        Prescription prescription = prescription2;
+        prescription.setActive(true);
+        Event event = event2;
+        event.setPrescription(prescription);
+        prescription.setEventList(Arrays.asList(event));
+        patient.setPrescriptions(Arrays.asList(prescription));
         user.setPatients(Arrays.asList(patient));
         return user;
     }
@@ -81,21 +93,16 @@ public class TestData {
     }
 
     public static Prescription getExpectedPrescription1() {
-        Prescription prescription = prescription1;
-        prescription.setActive(true);
-        Event event = event1;
-        event.setPrescription(prescription);
-        prescription.setEventList(Arrays.asList(event));
-        return prescription;
+        return getExpectedPatient1().getPrescriptions().get(0);
     }
 
     public static Prescription getExpectedPrescription2() {
-        Prescription prescription = prescription2;
-        prescription.setActive(true);
-        Event event = event2;
-        event.setPrescription(prescription);
-        prescription.setEventList(Arrays.asList(event));
-        return prescription;
+        return getExpectedPatient2().getPrescriptions().get(0);
+    }
+
+    public static Prescription getNewPrescription() {
+        return new Prescription(patient2, user1, "1- 2- 3-01:01", 3,
+                new ProcedureOrMedicine("Medicine", PrescriptionType.TYPE_MEDICINE));
     }
 
     public static Event getExpectedEvent1() {
@@ -105,7 +112,6 @@ public class TestData {
     public static Event getExpectedEvent2() {
         return getExpectedPatient2().getPrescriptions().get(0).getEventList().get(0);
     }
-
 
     public static Event getNewEvent() {
         return new Event(prescription2, LocalDateTime.now());

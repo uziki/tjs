@@ -28,7 +28,7 @@ import static com.tsystems.javaschool.web.SecurityUtil.authUserId;
 @Transactional
 public class PrescriptionEventFacade {
     private static final String HEALTHY = "Healthy";
-    private static final String CANCELED_BY_DOCTOR = "Canceled by doctor ";
+    private static final String CANCELED_BY_DOCTOR = "Canceled by doctor";
     private PrescriptionService prescriptionService;
     private EventService eventService;
     private ProcedureOrMedicineService pomService;
@@ -89,7 +89,7 @@ public class PrescriptionEventFacade {
         for (Event event : prescription.getEventList()) {
             if (event.getEventStatus() == EventStatus.STATUS_PLANNED) {
                 event.setEventStatus(EventStatus.STATUS_CANCELED);
-                event.setMessage(CANCELED_BY_DOCTOR + userService.get(authUserId()).getName());
+                event.setMessage(CANCELED_BY_DOCTOR);
                 eventService.update(event);
                 if (event.getDateTime().isBefore(LocalDate.now().plusDays(DAYS_BEFORE_TOMORROW).atStartOfDay()))
                     isTodayEvent = true;
