@@ -19,7 +19,7 @@
                 <th>Patient</th>
                 <th>Diagnosis</th>
                 <th>Doctor</th>
-                <th>Prescription history</th>
+                <%--<th>Prescription history</th>--%>
                 <th class="text-center">Edit prescriptions</th>
                 <th class="text-center">Discharge a patient</th>
             </tr>
@@ -30,7 +30,7 @@
                     <td><a href="patients/update?id=${patient.id}">${patient.name}</a></td>
                     <td>${patient.diagnosis}</td>
                     <td>${patient.doctorName}</td>
-                    <td>${patient.prescriptions}</td>
+                    <%--<td>${patient.prescriptions}</td>--%>
                     <td class="text-center"><a href="patients/prescriptions?id=${patient.id}"><span class="fa fa-pencil fa-2x"></span></a></td>
                     <td class="text-center"><a href="patients/delete?id=${patient.id}"><span class="fa fa-remove fa-2x"></span></a></td>
                 </tr>
